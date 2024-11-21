@@ -35,9 +35,12 @@ const Home = () => {
             Valiant freedom fighters and Bangladeshi Nationalists founded the{" "}
             party under the leadership of President Ziaur Rahman in 1978.
           </p>
-          <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-[#F8CF0B] hover:text-black">
-            Learn more
-          </button>
+          <a href="/ourLeader">
+            {" "}
+            <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-[#F8CF0B] hover:text-black">
+              Learn more
+            </button>
+          </a>
         </div>
 
         {/* Image Section */}

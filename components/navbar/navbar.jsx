@@ -39,7 +39,7 @@ const Navbar = () => {
           } md:flex items-center space-x-6 absolute md:static top-16 left-0 w-full md:w-auto bg-green-100 md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none z-10`}
         >
           <a
-            href="#"
+            href="/"
             className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             Home
@@ -57,7 +57,7 @@ const Navbar = () => {
             Videos
           </a>
           <a
-            href="#"
+            href="/noticeBoard"
             className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             Notice
@@ -73,7 +73,7 @@ const Navbar = () => {
         {/* Right Section: Buttons and Icons */}
         <div className="hidden md:flex items-center space-x-4">
           <a
-            href="#"
+            href="/signIn"
             className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
           >
             <span className="mr-2">Sign in</span>
