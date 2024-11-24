@@ -68,6 +68,12 @@ const Navbar = () => {
           >
             Resources
           </a>
+          <a
+            href="/dashBoard"
+            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+          >
+            Dashboard
+          </a>
         </div>
 
         {/* Right Section: Buttons and Icons */}

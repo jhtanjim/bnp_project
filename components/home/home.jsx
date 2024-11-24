@@ -6,11 +6,18 @@ const Home = () => {
     <div>
       {/* ?banner */}
       <div className="max-w-screen-2xl my-4 rounded-2xl lg:mx-auto overflow-hidden">
+        {/* 1st slide */}
         <img
           src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
           className="w-full lg:h-[650px] object-cover"
           alt=""
         />
+        {/* 2nd slide */}
+        {/* <img
+          src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+          className="w-full lg:h-[650px] object-cover"
+          alt=""
+        /> */}
         {/* <Image
           src="https://images.pexels.com/photos/8847005/pexels-photo-8847005.jpeg"
           alt="banner"

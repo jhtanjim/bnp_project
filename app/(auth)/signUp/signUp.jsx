@@ -1,32 +1,68 @@
-"use client"; // Marks this component as a Client Component
+"use client";
 
 import React, { useState } from "react";
-import Link from "next/link"; // Make sure to import Link from Next.js if you're using it for navigation
+import Link from "next/link";
 
 const SignUp = () => {
-  // State to manage form input values
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // State to manage form inputs
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    mobileNumber: "",
+    nid: "",
+    ward: "",
+    thana: "",
+    mohanagar: "Chattogram", // Default value for Mohanagar
+    politicalPost: "",
+    document: null,
+    image: null,
+  });
+
+  // Handle input change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle file upload
+  const handleFileUpload = (e) => {
+    const { name, files } = e.target;
+    setFormData({ ...formData, [name]: files[0] });
+  };
 
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Log the form data to the console
-    console.log("Form Submitted with the following data:");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // Validate form data
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
 
-    // Add your form submission logic here (e.g., make an API request for login)
-    console.log("Login attempt successful!");
+    console.log("Form submitted:", formData);
 
-    // Clear the form or show success message (optional)
-    setEmail("");
-    setPassword("");
+    // Clear the form (optional)
+    setFormData({
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      mobileNumber: "",
+      nid: "",
+      ward: "",
+      thana: "",
+      mohanagar: "Chattogram",
+      politicalPost: "",
+      document: null,
+      image: null,
+    });
   };
 
   return (
-    <div className="max-w-screen-2xl  lg:mx-auto p-4 my-12">
+    <div className="max-w-screen-2xl lg:mx-auto p-4 my-12">
       <div className="flex gap-4 items-center justify-center mb-6">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
@@ -36,32 +72,27 @@ const SignUp = () => {
         <h1 className="font-bold text-xl">BNP Chattogram</h1>
       </div>
 
-      {/* Form */}
-      <form className=" max-w-xl mx-auto my-4" onSubmit={handleSubmit}>
-        {/* Email and full name Input */}
+      <form className="max-w-xl mx-auto my-4" onSubmit={handleSubmit}>
+        {/* Full Name and Email */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label htmlFor="email" className="block text-sm font-semibold">
-              Full Name
-            </label>
+            <label className="block text-sm font-semibold">Full Name</label>
             <input
-              id="email"
-              value={email}
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
               placeholder="John Doe"
-              type="name"
+              type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
-          {/* email */}
           <div className="mb-4 w-full">
-            <label htmlFor="email" className="block text-sm font-semibold">
-              Email Address
-            </label>
+            <label className="block text-sm font-semibold">Email Address</label>
             <input
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)} // Bind the email input to state
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="abc@gmail.com"
               type="email"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
@@ -70,87 +101,152 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* Password Input */}
+        {/* Passwords */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label htmlFor="password" className="block text-sm font-semibold">
-              Password
-            </label>
+            <label className="block text-sm font-semibold">Password</label>
             <input
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Bind the password input to state
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="••••••••"
               type="password"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
-          {/* confirm pass */}
           <div className="mb-4 w-full">
-            <label htmlFor="password" className="block text-sm font-semibold">
+            <label className="block text-sm font-semibold">
               Confirm Password
             </label>
             <input
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Bind the password input to state
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               placeholder="••••••••"
-              type="confirm password"
+              type="password"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
         </div>
-        {/* Mobile Number and nid Input */}
+
+        {/* Mobile Number and NID */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label htmlFor="Number" className="block text-sm font-semibold">
-              Mobile Number
-            </label>
+            <label className="block text-sm font-semibold">Mobile Number</label>
             <input
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Bind the password input to state
+              name="mobileNumber"
+              value={formData.mobileNumber}
+              onChange={handleChange}
               placeholder="+8801"
-              type="number"
+              type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
-          {/* confirm pass */}
           <div className="mb-4 w-full">
-            <label htmlFor="password" className="block text-sm font-semibold">
-              NID
-            </label>
+            <label className="block text-sm font-semibold">NID</label>
             <input
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Bind the password input to state
-              placeholder="nid"
-              type="confirm password"
+              name="nid"
+              value={formData.nid}
+              onChange={handleChange}
+              placeholder="NID Number"
+              type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
         </div>
+
+        {/* Dropdowns */}
+
+        <div className="mb-4 w-full">
+          <label className="block text-sm font-semibold">Mohanagar</label>
+          <select
+            name="mohanagar"
+            value={formData.mohanagar}
+            onChange={handleChange}
+            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            required
+          >
+            <option value="Chattogram">Chattogram</option>
+            <option value="Dhaka">Dhaka</option>
+            <option value="Sylhet">Sylhet</option>
+          </select>
+        </div>
+
+        <div className="lg:flex gap-4">
+          <div className="mb-4 w-full">
+            <label className="block text-sm font-semibold">Ward</label>
+            <select
+              name="ward"
+              value={formData.ward}
+              onChange={handleChange}
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+              required
+            >
+              <option value="">Select Ward</option>
+              <option value="Ward 1">Ward 1</option>
+              <option value="Ward 2">Ward 2</option>
+              <option value="Ward 3">Ward 3</option>
+            </select>
+          </div>
+          <div className="mb-4 w-full">
+            <label className="block text-sm font-semibold">Thana</label>
+            <select
+              name="thana"
+              value={formData.thana}
+              onChange={handleChange}
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+              required
+            >
+              <option value="">Select Thana</option>
+              <option value="Thana 1">Thana 1</option>
+              <option value="Thana 2">Thana 2</option>
+              <option value="Thana 3">Thana 3</option>
+            </select>
+          </div>
+        </div>
+
+        {/* File Uploads */}
+        <div className="lg:flex gap-4">
+          <div className="mb-4 w-full">
+            <label className="block text-sm font-semibold">
+              Upload Document
+            </label>
+            <input
+              name="document"
+              onChange={handleFileUpload}
+              type="file"
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            />
+          </div>
+          <div className="mb-4 w-full">
+            <label className="block text-sm font-semibold">Upload Image</label>
+            <input
+              name="image"
+              onChange={handleFileUpload}
+              type="file"
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            />
+          </div>
+        </div>
+
         {/* Submit Button */}
         <button
           className="bg-[#16A34A] text-white p-2 w-full rounded hover:bg-[#F5CF0D] hover:text-red-500 font-bold"
           type="submit"
         >
-          Sig up &rarr;
+          Sign up &rarr;
         </button>
 
-        {/* Sign Up Link */}
         <p className="py-4 text-center">
-          Already have Account?{" "}
+          Already have an account?{" "}
           <Link href="/signIn">
             <span className="text-blue-800 font-semibold">Sign in</span>
           </Link>
         </p>
-
-        {/* Divider */}
       </form>
     </div>
   );

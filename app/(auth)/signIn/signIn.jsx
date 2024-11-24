@@ -69,7 +69,13 @@ const SignIn = () => {
             required
           />
         </div>
-
+        <p className="py-1 ">
+          <Link href="">
+            <span className="text-green-800 font-semibold">
+              Forget password
+            </span>
+          </Link>
+        </p>
         {/* Submit Button */}
         <button
           className="bg-[#16A34A] text-white p-2 w-full rounded hover:bg-[#F5CF0D] hover:text-red-500 font-bold"

@@ -8,7 +8,7 @@ const DashBoard = () => {
     <div className="my-40">
       <div className="grid lg:grid-cols-3">
         {/* card 1*/}
-        <a href="">
+        <a href="/myprofile">
           {" "}
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <FaUser className="text-6xl mx-auto" />
@@ -17,7 +17,7 @@ const DashBoard = () => {
           </div>
         </a>
         {/* card 2*/}
-        <a href="">
+        <a href="/profileCard">
           {" "}
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <FaIdCard className="text-6xl mx-auto" />
@@ -26,7 +26,7 @@ const DashBoard = () => {
           </div>
         </a>
         {/* card 3*/}
-        <a href="">
+        <a href="/noticeBoard">
           {" "}
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <MdMessage className="text-6xl mx-auto" />
@@ -35,7 +35,7 @@ const DashBoard = () => {
           </div>
         </a>
         {/* card 4*/}
-        <a href="">
+        <a href="/messageSend">
           {" "}
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <AiOutlineMessage className="text-6xl mx-auto" />
@@ -53,7 +53,7 @@ const DashBoard = () => {
           </div>
         </a>
         {/* card 6*/}
-        <a href="">
+        <a href="/candiDate">
           {" "}
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <MdHowToVote className="text-6xl mx-auto" />
@@ -62,7 +62,7 @@ const DashBoard = () => {
           </div>
         </a>
         {/* card */}
-        <a href="">
+        <a href="/approveList">
           {" "}
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <MdOutlineApproval className="text-6xl mx-auto" />
