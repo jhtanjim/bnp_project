@@ -63,7 +63,7 @@ const MessageSend = () => {
         Send
       </button>
       <p className="mt-4 text-sm text-center text-red-500">
-        After admin's approval, the message will send to the user.
+        After approval, the message will send to the user.
       </p>
     </div>
   );
