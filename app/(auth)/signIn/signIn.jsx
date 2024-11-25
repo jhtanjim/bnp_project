@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const SignIn = () => {
   // State to manage form input values
@@ -28,10 +29,12 @@ const SignIn = () => {
   return (
     <div className="max-w-screen-xl lg:mx-auto p-4 my-12">
       <div className="flex gap-4 items-center justify-center mb-6">
-        <img
+        <Image
           src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
           alt="Logo"
-          className="h-24 w-24"
+          width={96} // Adjust as needed
+          height={96} // Adjust as needed
+          priority // For critical images
         />
         <h1 className="font-bold text-xl">BNP Chattogram</h1>
       </div>
