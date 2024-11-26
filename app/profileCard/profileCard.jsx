@@ -14,7 +14,7 @@ const ProfileCard = () => {
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center gap-4">
             <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white">
-              <img
+              <Image
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO17hg6KvLlweeZWN0LCEdi-OXM9qGpbQ9w&s"
                 alt="Profile"
                 fill
@@ -28,7 +28,7 @@ const ProfileCard = () => {
           </div>
 
           <div className=" items-center">
-            <img
+            <Image
               src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
               alt="Logo"
               className="h-12 w-12 mx-auto"

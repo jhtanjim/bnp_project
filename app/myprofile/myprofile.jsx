@@ -1,7 +1,7 @@
 "use client";
+import Image from "next/image";
 
 import React, { useState } from "react";
-import Image from "next/image";
 
 const MyProfile = () => {
   const [profileData, setProfileData] = useState({
@@ -44,7 +44,7 @@ const MyProfile = () => {
         <div className="p-6">
           <div className="flex items-center gap-4 mb-2">
             <div className="relative w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-md">
-              <img
+              <Image
                 src={profileData.image}
                 alt="Profile"
                 fill

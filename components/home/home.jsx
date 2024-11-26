@@ -8,13 +8,16 @@ const Home = () => {
       {/* ?banner */}
       <div className="max-w-screen-2xl my-4 rounded-2xl lg:mx-auto overflow-hidden">
         {/* 1st slide */}
-        <img
+        <Image
           src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+          alt="Khaleda Zia"
           className="w-full lg:h-[650px] object-cover"
-          alt=""
+          width={1200} // Use the actual width of the image
+          height={650} // Use the actual height of the image
+          priority // Ensures the image is preloaded
         />
         {/* 2nd slide */}
-        {/* <img
+        {/* <Image
           src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
           className="w-full lg:h-[650px] object-cover"
           alt=""
@@ -55,24 +58,30 @@ const Home = () => {
         <div className="mt-6 lg:mt-0 lg:ml-8 lg:w-[40%] flex justify-center">
           <div className="grid grid-cols-2 gap-4">
             <div className="w-40 h-44 rounded-xl overflow-hidden">
-              <img
+              <Image
                 src="https://api.bnpbd.org/api/upload/images/our-leader-215252-ff2f.jpg"
                 alt="Leader Image 1"
+                width={500} // Replace with the actual width
+                height={500} // Replace with the actual height
                 className="w-full h-full object-cover"
               />
             </div>
             <div className="w-40 h-44 rounded-xl overflow-hidden">
-              <img
+              <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg/220px-Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg"
                 alt="Leader Image 2"
                 className="w-full h-full object-cover"
+                width={500} // Replace with the actual width
+                height={500} // Replace with the actual height
               />
             </div>
             <div className="col-span-2 w-full h-44 rounded-xl overflow-hidden ps-16">
-              <img
+              <Image
                 src="https://api.bnpbd.org/api/upload/images/our-leader-215252-2--66c6.jpg"
                 alt="Leader Image 3"
                 className="w-40 h-44 object-cover rounded-xl"
+                width={160} // Match the Tailwind w-40 (40 * 4 = 160px)
+                height={176} // Match the Tailwind h-44 (44 * 4 = 176px)
               />
             </div>
           </div>
@@ -152,10 +161,12 @@ const Home = () => {
             {/* Press Release 1 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="h-52">
-                <img
+                <Image
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJMpghZFZykt2PzKqdu9azQhEP9n_wQnIIOQ&s"
                   alt="Press Release 1"
                   className="w-full h-full object-cover"
+                  width={500} // Replace with actual dimensions
+                  height={300} // Replace with actual dimensions
                 />
               </div>
               <p className="p-4 text-gray-700">
@@ -165,10 +176,12 @@ const Home = () => {
             {/* Press Release 2 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="h-52">
-                <img
+                <Image
                   src="https://api.bnpbd.org/api/upload/images/mohan-8--8f9e.jpg"
                   alt="Press Release 2"
                   className="w-full h-full object-cover"
+                  width={500} // Set the width you want
+                  height={300} // Set the height you wants
                 />
               </div>
               <p className="p-4 text-gray-700">
@@ -177,11 +190,13 @@ const Home = () => {
             </div>
             {/* Press Release 3 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
-              <div className="h-52">
-                <img
-                  src="https://outspoken.newagebd.com/files/img/202405/8e8e937209a04ba29700c47d3a283895.jpg"
-                  alt="Press Release 3"
+              <div className="relative h-52">
+                <Image
+                  src="https://api.bnpbd.org/api/upload/images/mohan-8--8f9e.jpg"
+                  alt="Press Release 2"
                   className="w-full h-full object-cover"
+                  width={500} // Set the width you want
+                  height={300} // Set the height you wants
                 />
               </div>
               <p className="p-4 text-gray-700">

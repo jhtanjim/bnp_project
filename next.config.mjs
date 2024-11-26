@@ -3,7 +3,12 @@ const nextConfig = {
   // next.config.js
 
   images: {
-    domains: ["images.pexels.com"], // Add the domain here
+    domains: [
+      "images.news18.com",
+      "upload.wikimedia.org",
+      "api.bnpbd.org",
+      "encrypted-tbn0.gstatic.com",
+    ],
   },
 };
 

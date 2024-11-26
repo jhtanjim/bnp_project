@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const OurLeader = () => {
   return (
@@ -13,24 +14,30 @@ const OurLeader = () => {
         <div className="mt-6 lg:mt-0 lg:ml-8  flex justify-center">
           <div className="grid grid-cols-2 gap-4">
             <div className="w-full h-60 rounded-xl overflow-hidden">
-              <img
+              <Image
                 src="https://api.bnpbd.org/api/upload/images/our-leader-215252-ff2f.jpg"
                 alt="Leader Image 1"
                 className="w-full h-full object-cover"
+                width={500} // Replace with the actual width
+                height={500} // Replace with the actual height
               />
             </div>
             <div className="w-full h-60 rounded-xl overflow-hidden">
-              <img
+              <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg/220px-Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg"
                 alt="Leader Image 2"
+                width={500} // Replace with the actual width
+                height={500} // Replace with the actual height
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="col-span-2 w-full h- rounded-xl overflow-hidden flex  justify-center">
-              <img
-                src="https://api.bnpbd.org/api/upload/images/our-leader-215252-2--66c6.jpg"
-                alt="Leader Image 3"
-                className="w-48 h-56 object-cover rounded-xl"
+            <div className="col-span-2 w-44 h- rounded-xl overflow-hidden flex  justify-center">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg/220px-Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg"
+                alt="Leader Image 2"
+                width={500} // Replace with the actual width
+                height={500} // Replace with the actual height
+                className="w-full h-full object-cover"
               />
             </div>
           </div>

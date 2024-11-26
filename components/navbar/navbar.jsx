@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaFacebook, FaInstagram, FaBars, FaTimes } from "react-icons/fa";
@@ -15,9 +16,11 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo Section */}
         <div className="flex items-center">
-          <img
+          <Image
             src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
             alt="Logo"
+            width={40} // Match 10 * 4 (tailwind rem unit)
+            height={40} // Match 10 * 4 (tailwind rem unit)
             className="h-10 w-10"
           />
           <span className="ml-2 text-lg font-bold text-green-800">

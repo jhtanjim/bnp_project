@@ -6,10 +6,12 @@ const Footer = () => {
     <footer className="bg-green-600 py-6 px-4">
       <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
         <div className="flex items-center space-x-4">
-          <img
+          <Image
             src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
             alt="Logo"
-            className="h-24 w-24"
+            width={40} // Match 10 * 4 (tailwind rem unit)
+            height={40} // Match 10 * 4 (tailwind rem unit)
+            className="h-10 w-10"
           />
           <div className="text-white font-bold text-xl">BNP Chattogram</div>
         </div>
