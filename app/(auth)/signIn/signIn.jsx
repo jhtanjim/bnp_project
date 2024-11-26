@@ -89,7 +89,7 @@ const SignIn = () => {
 
         {/* Sign Up Link */}
         <p className="py-4 text-center">
-          Don't have an account?{" "}
+          Dont have an account?
           <Link href="/signUp">
             <span className="text-blue-800 font-semibold">Sign Up</span>
           </Link>
