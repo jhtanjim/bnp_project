@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Home = () => {
@@ -42,12 +43,12 @@ const Home = () => {
             Valiant freedom fighters and Bangladeshi Nationalists founded the{" "}
             party under the leadership of President Ziaur Rahman in 1978.
           </p>
-          <a href="/ourLeader">
+          <Link href="/ourLeader">
             {" "}
             <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-[#F8CF0B] hover:text-black">
               Learn more
             </button>
-          </a>
+          </Link>
         </div>
 
         {/* Image Section */}
