@@ -23,31 +23,35 @@ const ProfileCard = () => {
               />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">John Doe</h2>
-              <p className="text-gray-600">ID : 444001</p>
+              <h2 className="text-2xl font-bold">জন ডো</h2>
+              <p className="text-gray-600">আইডি : 444001</p>
             </div>
           </div>
 
           <div className=" items-center">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
-              alt="Logo"
-              className="h-12 w-12 mx-auto"
+              alt="লোগো"
+              width={40} // Match 10 * 4 (tailwind rem unit)
+              height={40} // Match 10 * 4 (tailwind rem unit)
+              className="h-10 w-10"
             />
-            <span className=" font-bold text-green-800">BNP Chattogram</span>
+            <span className=" font-bold text-green-800">
+              চট্টগ্রাম মহানগর বিএনপি
+            </span>
           </div>
         </div>
 
         <div className="space-y-3  mb-6">
-          <InfoRow label="Political Position" value="Example" />
-          <InfoRow label="Phone Number" value="+8801857373883" />
-          <InfoRow label="NID Number" value="340 4747 38" />
-          <InfoRow label="Birth date" value="01/02/1998" />
+          <InfoRow label="রাজনৈতিক পদবি" value="উদাহরণ" />
+          <InfoRow label="ফোন নম্বর" value="+8801857373883" />
+          <InfoRow label="এনআইডি নম্বর" value="340 4747 38" />
+          <InfoRow label="জন্ম তারিখ" value="01/02/1998" />
           <div className="flex gap-8">
-            <InfoRow label="Ward" value="07" />
-            <InfoRow label="Thana" value="Chandgaon" />
+            <InfoRow label="ওয়ার্ড" value="07" />
+            <InfoRow label="থানা" value="চন্দগাঁও" />
           </div>
-          <InfoRow label="Mahanagar" value="Chattogram" />
+          <InfoRow label="মহানগর" value="চট্টগ্রাম" />
         </div>
 
         <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium flex items-center justify-center gap-2">
@@ -64,7 +68,7 @@ const ProfileCard = () => {
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
             />
           </svg>
-          Download ID card
+          আইডি কার্ড ডাউনলোড করুন
         </button>
       </div>
     </div>

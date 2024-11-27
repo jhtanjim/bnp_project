@@ -13,34 +13,34 @@ const Footer = () => {
             height={40} // Match 10 * 4 (tailwind rem unit)
             className="h-10 w-10"
           />
-          <div className="text-white font-bold text-xl">BNP Chattogram</div>
+          <div className="text-white font-bold text-xl">
+            চট্টগ্রাম মহানগর বিএনপি
+          </div>
         </div>
 
         <div className="text-white space-y-2">
-          <h2 className="font-bold text-lg">Address</h2>
-          <p className="text-sm">
-            Nasiman Bhaban, Kazir Dewri, Chattogram 4000
-          </p>
-          <h2 className="font-bold text-lg mt-4">Email</h2>
+          <h2 className="font-bold text-lg">ঠিকানা</h2>
+          <p className="text-sm">নসিমন ভবন, কাজীর দেউড়ী, চট্টগ্রাম 4000</p>
+          <h2 className="font-bold text-lg mt-4">ইমেইল</h2>
           <p className="text-sm">info@gmail.com</p>
-          <h2 className="font-bold text-lg mt-4">Contact</h2>
-          <p className="text-sm">+89016</p>
+          <h2 className="font-bold text-lg mt-4">যোগাযোগ</h2>
+          <p className="text-sm">+৮৯০১৬</p>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow-lg">
           <div className="text-center font-bold text-green-700 mb-2">
-            March 2024
+            মার্চ ২০২৪
           </div>
           <table className="w-full text-center">
             <thead>
               <tr className="text-red-600">
-                <th>Sun</th>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
+                <th>রবি</th>
+                <th>সোম</th>
+                <th>মঙ্গল</th>
+                <th>বুধ</th>
+                <th>বৃহস্পতি</th>
+                <th>শুক্র</th>
+                <th>শনি</th>
               </tr>
             </thead>
             <tbody>

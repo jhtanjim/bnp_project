@@ -1,6 +1,6 @@
 import React from "react";
 
-const SelectCandidate = () => {
+const Vote = () => {
   return (
     <div className="font-sans text-center my-20">
       {/* Header */}
@@ -63,4 +63,4 @@ const SelectCandidate = () => {
   );
 };
 
-export default SelectCandidate;
+export default Vote;

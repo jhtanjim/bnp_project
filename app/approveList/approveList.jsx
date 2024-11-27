@@ -3,26 +3,28 @@ import React from "react";
 const ApproveList = () => {
   return (
     <div className="w-full max-w-2xl mx-auto p-4 my-24">
-      <h2 className="text-2xl font-semibold mb-4 text-center">Approval List</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-center">
+        অনুমোদন তালিকা
+      </h2>
       <div className="border rounded-lg overflow-x-auto">
         <table className="w-full">
           <thead className="bg-green-100">
             <tr className="">
-              <th className="text-center border p-2 ">Name</th>
-              <th className="p-2 border-collapse text-center">Approval</th>
+              <th className="text-center border p-2 ">নাম</th>
+              <th className="p-2 border-collapse text-center">অনুমোদন</th>
             </tr>
           </thead>
           <tbody className="border bg-green-50 text-center">
             {[1, 2, 3].map((row) => (
               <tr className="" key={row}>
-                <td className="border  p-2">John Doe</td>
-                <td className="border   p-2">
+                <td className="border p-2">জন ডো</td>
+                <td className="border p-2">
                   <div className="flex justify-center gap-2">
-                    <button className=" px-4 py-1 text-sm bg-green-500 hover:bg-green-600 text-white rounded">
-                      Approve
+                    <button className="px-4 py-1 text-sm bg-green-500 hover:bg-green-600 text-white rounded">
+                      অনুমোদন
                     </button>
                     <button className="px-4 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded">
-                      Cancel
+                      বাতিল
                     </button>
                   </div>
                 </td>

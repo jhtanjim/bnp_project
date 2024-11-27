@@ -1,17 +1,19 @@
 "use client";
+import SignIn from "@/app/(auth)/signIn/signIn";
 import { BnpDofa } from "@/app/bnpDofa/bnpDofa";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FaSearch } from "react-icons/fa";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styles
 
 const Home = () => {
   return (
     <div>
-      {/* ?banner */}
+      {/* ব্যানার */}
       <div className="max-w-screen-2xl mx-4 my-4 rounded-2xl lg:mx-auto overflow-hidden">
-        {/* Carousel */}
+        {/* ক্যারাউসেল */}
         <Carousel
           autoPlay
           infiniteLoop
@@ -22,7 +24,7 @@ const Home = () => {
           <div>
             <Image
               src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-              alt="Khaleda Zia"
+              alt="খালেদা জিয়া"
               className="w-full lg:h-[650px] object-cover"
               width={1200}
               height={650}
@@ -32,27 +34,7 @@ const Home = () => {
           <div>
             <Image
               src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-              alt="Khaleda Zia"
-              className="w-full lg:h-[650px] object-cover"
-              width={1200}
-              height={650}
-              priority
-            />
-          </div>
-          <div>
-            <Image
-              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-              alt="Khaleda Zia"
-              className="w-full lg:h-[650px] object-cover"
-              width={1200}
-              height={650}
-              priority
-            />
-          </div>
-          <div>
-            <Image
-              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-              alt="Khaleda Zia"
+              alt="খালেদা জিয়া"
               className="w-full lg:h-[650px] object-cover"
               width={1200}
               height={650}
@@ -60,111 +42,79 @@ const Home = () => {
             />
           </div>
         </Carousel>
-
-        {/* 1st slide */}
-        {/* <Image
-          src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-          alt="Khaleda Zia"
-          className="w-full lg:h-[650px] object-cover"
-          width={1200} // Use the actual width of the image
-          height={650} // Use the actual height of the image
-          priority // Ensures the image is preloaded
-        /> */}
-        {/* 2nd slide */}
-        {/* <Image
-          src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-          className="w-full lg:h-[650px] object-cover"
-          alt=""
-        /> */}
-        {/* <Image
-          src="https://images.pexels.com/photos/8847005/pexels-photo-8847005.jpeg"
-          alt="banner"
-          layout="responsive" // Makes the image responsive
-          width={400} // Original image width
-          height={400} // Original image height
-          className="rounded-2xl"
-        /> */}
       </div>
-      {/* Leader Section */}
-      <div className="max-w-screen-2xl mx-auto my-8 p-6 rounded-lg bg-white flex flex-col lg:flex-row items-center lg:items-start">
-        {/* Text Section */}
-        <div className="lg:w-[60%] my-auto ">
-          <h2 className="text-6xl font-semibold text-red-500">
-            Our
-            <span className="ms-2 text-green-600 text-6xl font-bold">
-              Leader
-            </span>
-          </h2>
-          <p className="mt-4 text-3xl text-gray-700">
-            Valiant freedom fighters and Bangladeshi Nationalists founded the
-            party under the leadership of President Ziaur Rahman in 1978
-          </p>
-          <Link href="/ourLeader">
-            {" "}
-            <button className="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-[#F8CF0B] hover:text-black">
-              Learn more
+      {/* search */}
+      <div className="max-w-screen-xl lg:mx-auto mx-4 ">
+        <div className="flex justify-center items-center space-x-4 my-10">
+          <div className="w-full md:w-[90%]">
+            <label
+              htmlFor="search"
+              className="block text-lg font-semibold text-green-600 mb-2"
+            >
+              সদস্য খুঁজুন
+            </label>
+            <input
+              id="search"
+              placeholder="সদস্য খুঁজুন"
+              type="text"
+              className="border-2 border-green-500 shadow-xl rounded-2xl w-full px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-green-600"
+              required
+            />
+          </div>
+          <div className="my-auto mt-10 lg:w-[10%]">
+            <button className="bg-green-600 text-white p-4 rounded-full hover:bg-red-700  transition duration-300 hover:text-yellow-500">
+              <FaSearch size={20} />
             </button>
-          </Link>
-        </div>
-
-        {/* Image Section */}
-        <div className="mt-6 lg:mt-0 lg:ml-8 lg:w-[40%] flex justify-center">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="w-40 h-44 rounded-xl overflow-hidden">
-              <Image
-                src="https://api.bnpbd.org/api/upload/images/our-leader-215252-ff2f.jpg"
-                alt="Leader Image 1"
-                width={500} // Replace with the actual width
-                height={500} // Replace with the actual height
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="w-40 h-44 rounded-xl overflow-hidden">
-              <Image
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg/220px-Prinses_Beatrix_en_mevrouw_Begem_Ziaur_Rahman_bezoeken_Madurodam.jpg"
-                alt="Leader Image 2"
-                className="w-full h-full object-cover"
-                width={500} // Replace with the actual width
-                height={500} // Replace with the actual height
-              />
-            </div>
-            <div className="col-span-2 w-full h-44 rounded-xl overflow-hidden ps-16">
-              <Image
-                src="https://api.bnpbd.org/api/upload/images/our-leader-215252-2--66c6.jpg"
-                alt="Leader Image 3"
-                className="w-40 h-44 object-cover rounded-xl"
-                width={160} // Match the Tailwind w-40 (40 * 4 = 160px)
-                height={176} // Match the Tailwind h-44 (44 * 4 = 176px)
-              />
-            </div>
           </div>
         </div>
       </div>
-      {/* bnpDofa */}
+
+      {/* নেতা বিভাগ */}
+
       <div className="max-w-screen-2xl lg:mx-auto mx-4">
-        <BnpDofa />
-      </div>{" "}
-      {/*  */}
+        <div className="lg:flex gap-4">
+          <div className="w-full">
+            <BnpDofa />
+          </div>
+          <div className="w-full my-auto">
+            <SignIn />
+          </div>
+        </div>
+      </div>
+
+      {/* ভিডিও */}
+      <div className="mx-4 aspect-w-16 aspect-h-10">
+        <iframe
+          src="https://www.youtube.com/embed/2tWPVCVSoaQ"
+          title="ভিডিও"
+          className="w-full h-[500px]"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+
+      {/* উক্তি */}
       <div className="mt-6 text-center bg-[#DCFCE7] py-20">
-        <blockquote className="italic text-2xl font-bold ">
-          “We have got the strength and we can work, dig and grow. We can pull
-          ourselves up. With our bare hands we can achieve great things.”
+        <blockquote className="italic text-2xl font-bold">
+          “আমাদের মধ্যে শক্তি আছে এবং আমরা কাজ করতে পারি। আমরা নিজেরাই নিজেদের
+          টেনে তুলতে পারি। খালি হাতে আমরা বড় কিছু অর্জন করতে পারি।”
         </blockquote>
-        <p className="mt-2  font-semibold text-xl">
-          Shaheed President <span className="text-green-600">Ziaur Rahman</span>
+        <p className="mt-2 font-semibold text-xl">
+          শহীদ প্রেসিডেন্ট <span className="text-green-600">জিয়াউর রহমান</span>
         </p>
       </div>
-      <div className="max-w-screen-2xl mx-auto my-8 p-6 rounded-lg bg-white ">
-        {/* Videos Section */}
+
+      {/* ভিডিও বিভাগ */}
+      <div className="max-w-screen-2xl mx-auto my-8 p-6 rounded-lg bg-white">
         <div className="mt-10">
-          <h3 className="text-2xl text-center font-bold">Videos</h3>
+          <h3 className="text-2xl text-center font-bold">ভিডিও</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {/* Video 1 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
                   src="https://www.youtube.com/embed/OsbiW19Mpio"
-                  title="Video 1"
+                  title="ভিডিও ১"
                   className="w-full h-80"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -172,91 +122,80 @@ const Home = () => {
                 ></iframe>
               </div>
               <p className="p-4 text-gray-700">
-                A comprehensive overview of the topic covered in the video.
+                ভিডিওতে আলোচিত বিষয়ের বিস্তারিত।
               </p>
             </div>
-            {/* Video 2 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
                   src="https://www.youtube.com/embed/2tWPVCVSoaQ"
-                  title="Video 2"
+                  title="ভিডিও ২"
                   className="w-full h-80"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
               </div>
-              <p className="p-4 text-gray-700">
-                Learn more about fascinating insights and details.
-              </p>
+              <p className="p-4 text-gray-700">আকর্ষণীয় তথ্য এবং বিশ্লেষণ।</p>
             </div>
-            {/* Video 3 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="aspect-w-16 aspect-h-9">
                 <iframe
-                  src="https://www.youtube.com/embed/wULl6Djw-SQ"
-                  title="Video 3"
+                  src="https://www.youtube.com/embed/2tWPVCVSoaQ"
+                  title="ভিডিও ২"
                   className="w-full h-80"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
               </div>
-              <p className="p-4 text-gray-700">
-                Discover in-depth discussions on this amazing topic.
-              </p>
+              <p className="p-4 text-gray-700">আকর্ষণীয় তথ্য এবং বিশ্লেষণ।</p>
             </div>
           </div>
         </div>
 
-        {/* Press Release Section */}
+        {/* প্রেস রিলিজ বিভাগ */}
         <div className="mt-10">
-          <h3 className="text-2xl text-center font-bold">Press Release</h3>
+          <h3 className="text-2xl text-center font-bold">প্রেস রিলিজ</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {/* Press Release 1 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="h-52">
                 <Image
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJMpghZFZykt2PzKqdu9azQhEP9n_wQnIIOQ&s"
-                  alt="Press Release 1"
+                  alt="প্রেস রিলিজ ১"
                   className="w-full h-full object-cover"
-                  width={500} // Replace with actual dimensions
-                  height={300} // Replace with actual dimensions
+                  width={500}
+                  height={300}
                 />
               </div>
-              <p className="p-4 text-gray-700">
-                A detailed press release about the latest updates and news.
-              </p>
+              <p className="p-4 text-gray-700">সর্বশেষ আপডেট এবং খবর।</p>
             </div>
-            {/* Press Release 2 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
               <div className="h-52">
                 <Image
                   src="https://api.bnpbd.org/api/upload/images/mohan-8--8f9e.jpg"
-                  alt="Press Release 2"
+                  alt="প্রেস রিলিজ ২"
                   className="w-full h-full object-cover"
-                  width={500} // Set the width you want
-                  height={300} // Set the height you wants
+                  width={500}
+                  height={300}
                 />
               </div>
               <p className="p-4 text-gray-700">
-                Important announcements and key details from the organization.
+                গুরুত্বপূর্ণ ঘোষণা এবং বিশদ বিবরণ।
               </p>
             </div>
-            {/* Press Release 3 */}
             <div className="rounded-lg overflow-hidden shadow-lg">
-              <div className="relative h-52">
+              <div className="h-52">
                 <Image
                   src="https://api.bnpbd.org/api/upload/images/mohan-8--8f9e.jpg"
-                  alt="Press Release 2"
+                  alt="প্রেস রিলিজ ২"
                   className="w-full h-full object-cover"
-                  width={500} // Set the width you want
-                  height={300} // Set the height you wants
+                  width={500}
+                  height={300}
                 />
               </div>
               <p className="p-4 text-gray-700">
-                Updates on significant events and actions recently undertaken.
+                গুরুত্বপূর্ণ ঘোষণা এবং বিশদ বিবরণ।
               </p>
             </div>
           </div>

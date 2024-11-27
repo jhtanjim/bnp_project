@@ -15,7 +15,7 @@ const SignUp = () => {
     nid: "",
     ward: "",
     thana: "",
-    mohanagar: "Chattogram", // Default value for Mohanagar
+    mohanagar: "চট্টগ্রাম", // Default value for Mohanagar
     politicalPost: "",
     document: null,
     image: null,
@@ -39,7 +39,7 @@ const SignUp = () => {
 
     // Validate form data
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      alert("পাসওয়ার্ড মিলছে না!");
       return;
     }
 
@@ -55,7 +55,7 @@ const SignUp = () => {
       nid: "",
       ward: "",
       thana: "",
-      mohanagar: "Chattogram",
+      mohanagar: "চট্টগ্রাম",
       politicalPost: "",
       document: null,
       image: null,
@@ -67,31 +67,31 @@ const SignUp = () => {
       <div className="flex gap-4 items-center justify-center mb-6">
         <Image
           src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
-          alt="Logo"
-          width={96} // Adjust as needed
-          height={96} // Adjust as needed
-          priority // For critical images
+          alt="লোগো"
+          width={96}
+          height={96}
+          priority
         />
-        <h1 className="font-bold text-xl">BNP Chattogram</h1>
+        <h1 className="font-bold text-xl">চট্টগ্রাম মহানগর বিএনপি</h1>
       </div>
 
       <form className="max-w-xl mx-auto my-4" onSubmit={handleSubmit}>
         {/* Full Name and Email */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Full Name</label>
+            <label className="block text-sm font-semibold">পূর্ণ নাম</label>
             <input
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              placeholder="John Doe"
+              placeholder="জন ডো"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Email Address</label>
+            <label className="block text-sm font-semibold">ইমেইল ঠিকানা</label>
             <input
               name="email"
               value={formData.email}
@@ -107,7 +107,7 @@ const SignUp = () => {
         {/* Passwords */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Password</label>
+            <label className="block text-sm font-semibold">পাসওয়ার্ড</label>
             <input
               name="password"
               value={formData.password}
@@ -120,7 +120,7 @@ const SignUp = () => {
           </div>
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">
-              Confirm Password
+              পাসওয়ার্ড নিশ্চিত করুন
             </label>
             <input
               name="confirmPassword"
@@ -137,38 +137,35 @@ const SignUp = () => {
         {/* Mobile Number and NID */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Mobile Number</label>
+            <label className="block text-sm font-semibold">মোবাইল নম্বর</label>
             <input
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              placeholder="+8801"
+              placeholder="+৮৮০১"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">NID</label>
+            <label className="block text-sm font-semibold">এনআইডি</label>
             <input
               name="nid"
               value={formData.nid}
               onChange={handleChange}
-              placeholder="NID Number"
+              placeholder="এনআইডি নম্বর"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
         </div>
-        {/* bnp/ zubodol */}
+
         {/* Dropdowns */}
-
         <div className="lg:flex gap-4">
-          {/*  */}
-
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">BNP/JUBODOL</label>
+            <label className="block text-sm font-semibold">বিএনপি/যুবদল</label>
             <select
               name="mohanagar"
               value={formData.mohanagar}
@@ -176,15 +173,13 @@ const SignUp = () => {
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             >
-              <option value="Chattogram">BNP</option>
-              <option value="Dhaka">JUBODOL</option>
+              <option value="চট্টগ্রাম">বিএনপি</option>
+              <option value="ঢাকা">যুবদল</option>
+              <option value="ঢাকা">ছাত্রদল</option>
             </select>
           </div>
-          {/*  */}
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">
-              Mohanagar/Jela
-            </label>
+            <label className="block text-sm font-semibold">মহানগর/জেলা</label>
             <select
               name="mohanagar"
               value={formData.mohanagar}
@@ -192,16 +187,17 @@ const SignUp = () => {
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             >
-              <option value="Chattogram">Chattogram Mohanogor</option>
-              <option value="Dhaka">Chattogram Uttor jela</option>
-              <option value="Sylhet">Chattogram Dokkhin jela</option>
+              <option value="চট্টগ্রাম">চট্টগ্রাম মহানগর</option>
+              <option value="ঢাকা">চট্টগ্রাম উত্তর জেলা</option>
+              <option value="সিলেট">চট্টগ্রাম দক্ষিণ জেলা</option>
             </select>
           </div>
         </div>
 
+        {/* থানা এবং ওয়ার্ড */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Thana</label>
+            <label className="block text-sm font-semibold">থানা</label>
             <select
               name="thana"
               value={formData.thana}
@@ -209,14 +205,14 @@ const SignUp = () => {
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             >
-              <option value="">Select Thana</option>
-              <option value="Thana 1">Thana 1</option>
-              <option value="Thana 2">Thana 2</option>
-              <option value="Thana 3">Thana 3</option>
+              <option value="">থানা নির্বাচন করুন</option>
+              <option value="Thana 1">থানা ১</option>
+              <option value="Thana 2">থানা ২</option>
+              <option value="Thana 3">থানা ৩</option>
             </select>
           </div>
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Ward/union</label>
+            <label className="block text-sm font-semibold">ওয়ার্ড/ইউনিয়ন</label>
             <select
               name="ward"
               value={formData.ward}
@@ -224,17 +220,18 @@ const SignUp = () => {
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             >
-              <option value="">Select Ward</option>
-              <option value="Ward 1">Ward 1</option>
-              <option value="Ward 2">Ward 2</option>
-              <option value="Ward 3">Ward 3</option>
+              <option value="">ওয়ার্ড নির্বাচন করুন</option>
+              <option value="Ward 1">ওয়ার্ড ১</option>
+              <option value="Ward 2">ওয়ার্ড ২</option>
+              <option value="Ward 3">ওয়ার্ড ৩</option>
             </select>
           </div>
         </div>
-        {/* nitbachoni kendro */}
+
+        {/* নির্বাচনী কেন্দ্র */}
         <div className="mb-4 w-full">
           <label className="block text-sm font-semibold">
-            Nirbachoni Kendro
+            নির্বাচনী কেন্দ্র
           </label>
           <select
             name="mohanagar"
@@ -243,16 +240,17 @@ const SignUp = () => {
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             required
           >
-            <option value="Chattogram">Nirbachoni Kendro</option>
-            <option value="Dhaka">Nirbachoni Kendro </option>
-            <option value="Sylhet">Nirbachoni Kendro </option>
+            <option value="Chattogram">কেন্দ্র ১</option>
+            <option value="Dhaka">কেন্দ্র ২</option>
+            <option value="Sylhet">কেন্দ্র ৩</option>
           </select>
         </div>
-        {/* File Uploads */}
+
+        {/* ফাইল আপলোড */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">
-              Upload Document
+              দস্তাবেজ আপলোড করুন
             </label>
             <input
               name="document"
@@ -262,7 +260,9 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Upload Image</label>
+            <label className="block text-sm font-semibold">
+              ছবি আপলোড করুন
+            </label>
             <input
               name="image"
               onChange={handleFileUpload}
@@ -277,13 +277,13 @@ const SignUp = () => {
           className="bg-[#16A34A] text-white p-2 w-full rounded hover:bg-[#F5CF0D] hover:text-red-500 font-bold"
           type="submit"
         >
-          Sign up &rarr;
+          সাইন আপ &rarr;
         </button>
 
         <p className="py-4 text-center">
-          Already have an account?{" "}
+          ইতোমধ্যে একটি অ্যাকাউন্ট আছে?{" "}
           <Link href="/signIn">
-            <span className="text-blue-800 font-semibold">Sign in</span>
+            <span className="text-blue-800 font-semibold">সাইন ইন</span>
           </Link>
         </p>
       </form>

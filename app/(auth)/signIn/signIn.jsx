@@ -5,23 +5,23 @@ import Link from "next/link";
 import Image from "next/image";
 
 const SignIn = () => {
-  // State to manage form input values
+  // ফর্ম ইনপুটের মান পরিচালনার জন্য স্টেট
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Handle form submission
+  // ফর্ম সাবমিট করার হ্যান্ডলার
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Log the form data to the console
-    console.log("Form Submitted with the following data:");
-    console.log("Email:", email);
-    console.log("Password:", password);
+    // ফর্ম ডেটা কনসোলে লগ করা
+    console.log("ফর্ম জমা দেওয়া হয়েছে নিম্নলিখিত ডেটার সাথে:");
+    console.log("ইমেইল:", email);
+    console.log("পাসওয়ার্ড:", password);
 
-    // Add your form submission logic here (e.g., make an API request for login)
-    console.log("Login attempt successful!");
+    // ফর্ম সাবমিশনের লজিক এখানে যোগ করুন (যেমন API রিকোয়েস্ট)
+    console.log("লগইন প্রচেষ্টা সফল!");
 
-    // Clear the form or show success message (optional)
+    // ফর্ম ক্লিয়ার করা বা সফল বার্তা দেখানো (ঐচ্ছিক)
     setEmail("");
     setPassword("");
   };
@@ -31,71 +31,69 @@ const SignIn = () => {
       <div className="flex gap-4 items-center justify-center mb-6">
         <Image
           src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
-          alt="Logo"
-          width={96} // Adjust as needed
-          height={96} // Adjust as needed
-          priority // For critical images
+          alt="লোগো"
+          width={96} // প্রয়োজন অনুযায়ী সামঞ্জস্য করুন
+          height={96} // প্রয়োজন অনুযায়ী সামঞ্জস্য করুন
+          priority // গুরুত্বপূর্ণ ইমেজ লোডের জন্য
         />
-        <h1 className="font-bold text-xl">BNP Chattogram</h1>
+        <h1 className="font-bold text-xl">চট্টগ্রাম মহানগর বিএনপি</h1>
       </div>
 
-      {/* Form */}
+      {/* ফর্ম */}
       <form className="max-w-md mx-auto my-4" onSubmit={handleSubmit}>
-        {/* Email Input */}
+        {/* ইমেইল ইনপুট */}
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-semibold">
-            Email Address
+            ইমেইল ঠিকানা
           </label>
           <input
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // Bind the email input to state
-            placeholder="abc@gmail.com"
+            onChange={(e) => setEmail(e.target.value)} // ইমেইল ইনপুটকে স্টেটে সংযুক্ত করুন
+            placeholder="আপনার ইমেইল লিখুন"
             type="email"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             required
           />
         </div>
 
-        {/* Password Input */}
+        {/* পাসওয়ার্ড ইনপুট */}
         <div className="mb-4">
           <label htmlFor="password" className="block text-sm font-semibold">
-            Password
+            পাসওয়ার্ড
           </label>
           <input
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // Bind the password input to state
+            onChange={(e) => setPassword(e.target.value)} // পাসওয়ার্ড ইনপুটকে স্টেটে সংযুক্ত করুন
             placeholder="••••••••"
             type="password"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             required
           />
         </div>
-        <p className="py-1 ">
-          <Link href="">
-            <span className="text-green-800 font-semibold">
-              Forget password
-            </span>
-          </Link>
-        </p>
-        {/* Submit Button */}
+
+        {/* সাবমিট বোতাম */}
         <button
           className="bg-[#16A34A] text-white p-2 w-full rounded hover:bg-[#F5CF0D] hover:text-red-500 font-bold"
           type="submit"
         >
-          Log in &rarr;
+          লগইন করুন &rarr;
         </button>
-
-        {/* Sign Up Link */}
-        <p className="py-4 text-center">
-          Dont have an account?
-          <Link href="/signUp">
-            <span className="text-blue-800 font-semibold">Sign Up</span>
+        <p className="py-1 ">
+          <Link href="">
+            <span className="text-green-800 font-semibold">
+              পাসওয়ার্ড ভুলে গেছেন?
+            </span>
           </Link>
         </p>
-
-        {/* Divider */}
+        {/* সাইন আপ লিঙ্ক */}
+        <p className="py-4 text-center">
+          অ্যাকাউন্ট নেই?
+          <Link href="/signUp">
+            <span className="text-blue-800 font-semibold">সাইন আপ করুন</span>
+          </Link>
+        </p>
       </form>
     </div>
   );

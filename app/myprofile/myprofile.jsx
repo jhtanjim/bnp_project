@@ -1,20 +1,19 @@
 "use client";
 import Image from "next/image";
-
 import React, { useState } from "react";
 
 const MyProfile = () => {
   const [profileData, setProfileData] = useState({
-    name: "John Doe",
+    name: "জন ডো",
     id: "444001",
     email: "info@gmail.com",
     phone: "+8801857373883",
     nid: "340 4747 38",
     birthDate: "01/02/1998",
-    politicalPosition: "Example",
+    politicalPosition: "উদাহরণ",
     ward: "07",
-    thana: "Chandgaon",
-    mahanagar: "Chattogram",
+    thana: "চন্দগাঁও",
+    mahanagar: "চট্টগ্রাম",
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZAGlcoNry_9VmU7efhCQnpCnNAqKL_tVVYw&s",
   });
@@ -31,6 +30,7 @@ const MyProfile = () => {
     setProfileData(updatedData);
     setIsEditing(false);
   };
+
   const InfoRow = ({ label, value }) => (
     <div className="flex justify-between items-center py-2 border-b border-gray-300">
       <span className="text-gray-600 font-bold">{label} :</span>
@@ -55,18 +55,18 @@ const MyProfile = () => {
           </div>
 
           <div className="space-y-2">
-            <InfoRow className="" label="ID" value={profileData.id} />
-            <InfoRow label="Email" value={profileData.email} />
-            <InfoRow label="Phone Number" value={profileData.phone} />
-            <InfoRow label="NID Number" value={profileData.nid} />
-            <InfoRow label="Birth date" value={profileData.birthDate} />
+            <InfoRow label="আইডি" value={profileData.id} />
+            <InfoRow label="ইমেইল" value={profileData.email} />
+            <InfoRow label="ফোন নম্বর" value={profileData.phone} />
+            <InfoRow label="এনআইডি নম্বর" value={profileData.nid} />
+            <InfoRow label="জন্ম তারিখ" value={profileData.birthDate} />
             <InfoRow
-              label="Political Position"
+              label="রাজনৈতিক পদবি"
               value={profileData.politicalPosition}
             />
-            <InfoRow label="Ward" value={profileData.ward} />
-            <InfoRow label="Thana" value={profileData.thana} />
-            <InfoRow label="Mahanagar" value={profileData.mahanagar} />
+            <InfoRow label="ওয়ার্ড" value={profileData.ward} />
+            <InfoRow label="থানা" value={profileData.thana} />
+            <InfoRow label="মহানগর" value={profileData.mahanagar} />
           </div>
         </div>
 
@@ -75,14 +75,14 @@ const MyProfile = () => {
             className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-medium"
             onClick={() => setIsEditing(true)}
           >
-            Edit profile
+            প্রোফাইল সম্পাদনা করুন
           </button>
         </div>
 
         {isEditing && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl p-6 w-full max-w-md">
-              <h3 className="text-xl font-bold mb-4">Edit Profile</h3>
+              <h3 className="text-xl font-bold mb-4">প্রোফাইল সম্পাদনা</h3>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {Object.entries(profileData)
                   .reduce((acc, [key, value], index) => {
@@ -118,13 +118,13 @@ const MyProfile = () => {
                     className="px-4 py-2 border rounded-lg"
                     onClick={() => setIsEditing(false)}
                   >
-                    Cancel
+                    বাতিল
                   </button>
                   <button
                     type="submit"
                     className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg"
                   >
-                    Save changes
+                    পরিবর্তন সংরক্ষণ করুন
                   </button>
                 </div>
               </form>
@@ -135,12 +135,5 @@ const MyProfile = () => {
     </div>
   );
 };
-
-const InfoRow = ({ label, value }) => (
-  <div className="flex justify-between items-center py-2 border-b border-gray-300">
-    <span className="text-gray-600">{label} :</span>
-    <span className="text-gray-800">{value}</span>
-  </div>
-);
 
 export default MyProfile;

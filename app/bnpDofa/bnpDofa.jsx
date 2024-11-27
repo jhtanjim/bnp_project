@@ -26,7 +26,7 @@ export const BnpDofa = ({ className }) => {
       description: "This is a description for the third item.",
     },
     {
-      link: "/link3",
+      link: "/vision",
       title: "ভিশন ২০৩০",
       description: "This is a description for the third item.",
     },
@@ -35,7 +35,7 @@ export const BnpDofa = ({ className }) => {
   return (
     <div
       className={cn(
-        " grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 py-10", // Tailwind classes for layout
+        " grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 py-10", // Tailwind classes for layout
         className
       )}
     >
@@ -63,7 +63,7 @@ export const BnpDofa = ({ className }) => {
           </AnimatePresence>
           <Card>
             <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
+            {/* <CardDescription>{item.description}</CardDescription> */}
           </Card>
         </Link>
       ))}
