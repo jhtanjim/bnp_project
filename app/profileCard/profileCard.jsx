@@ -17,7 +17,8 @@ const ProfileCard = () => {
               <Image
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREO17hg6KvLlweeZWN0LCEdi-OXM9qGpbQ9w&s"
                 alt="Profile"
-                fill
+                width={100}
+                height={100}
                 className="object-cover"
               />
             </div>

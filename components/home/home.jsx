@@ -1,21 +1,75 @@
+"use client";
+import { BnpDofa } from "@/app/bnpDofa/bnpDofa";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styles
 
 const Home = () => {
   return (
     <div>
       {/* ?banner */}
-      <div className="max-w-screen-2xl my-4 rounded-2xl lg:mx-auto overflow-hidden">
+      <div className="max-w-screen-2xl mx-4 my-4 rounded-2xl lg:mx-auto overflow-hidden">
+        {/* Carousel */}
+        <Carousel
+          autoPlay
+          infiniteLoop
+          interval={7000}
+          showThumbs={false}
+          showStatus={false}
+        >
+          <div>
+            <Image
+              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+              alt="Khaleda Zia"
+              className="w-full lg:h-[650px] object-cover"
+              width={1200}
+              height={650}
+              priority
+            />
+          </div>
+          <div>
+            <Image
+              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+              alt="Khaleda Zia"
+              className="w-full lg:h-[650px] object-cover"
+              width={1200}
+              height={650}
+              priority
+            />
+          </div>
+          <div>
+            <Image
+              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+              alt="Khaleda Zia"
+              className="w-full lg:h-[650px] object-cover"
+              width={1200}
+              height={650}
+              priority
+            />
+          </div>
+          <div>
+            <Image
+              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+              alt="Khaleda Zia"
+              className="w-full lg:h-[650px] object-cover"
+              width={1200}
+              height={650}
+              priority
+            />
+          </div>
+        </Carousel>
+
         {/* 1st slide */}
-        <Image
+        {/* <Image
           src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
           alt="Khaleda Zia"
           className="w-full lg:h-[650px] object-cover"
           width={1200} // Use the actual width of the image
           height={650} // Use the actual height of the image
           priority // Ensures the image is preloaded
-        />
+        /> */}
         {/* 2nd slide */}
         {/* <Image
           src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
@@ -31,7 +85,6 @@ const Home = () => {
           className="rounded-2xl"
         /> */}
       </div>
-
       {/* Leader Section */}
       <div className="max-w-screen-2xl mx-auto my-8 p-6 rounded-lg bg-white flex flex-col lg:flex-row items-center lg:items-start">
         {/* Text Section */}
@@ -43,8 +96,8 @@ const Home = () => {
             </span>
           </h2>
           <p className="mt-4 text-3xl text-gray-700">
-            Valiant freedom fighters and Bangladeshi Nationalists founded the{" "}
-            party under the leadership of President Ziaur Rahman in 1978.
+            Valiant freedom fighters and Bangladeshi Nationalists founded the
+            party under the leadership of President Ziaur Rahman in 1978
           </p>
           <Link href="/ourLeader">
             {" "}
@@ -87,7 +140,10 @@ const Home = () => {
           </div>
         </div>
       </div>
-
+      {/* bnpDofa */}
+      <div className="max-w-screen-2xl lg:mx-auto mx-4">
+        <BnpDofa />
+      </div>{" "}
       {/*  */}
       <div className="mt-6 text-center bg-[#DCFCE7] py-20">
         <blockquote className="italic text-2xl font-bold ">

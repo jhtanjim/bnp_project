@@ -24,7 +24,7 @@ const Navbar = () => {
             className="h-10 w-10"
           />
           <span className="ml-2 text-lg font-bold text-green-800">
-            BNP Chattogram
+            Chattogram Mohanagar BNP
           </span>
         </div>
 

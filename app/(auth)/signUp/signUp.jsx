@@ -161,40 +161,45 @@ const SignUp = () => {
             />
           </div>
         </div>
-
+        {/* bnp/ zubodol */}
         {/* Dropdowns */}
 
-        <div className="mb-4 w-full">
-          <label className="block text-sm font-semibold">Mohanagar</label>
-          <select
-            name="mohanagar"
-            value={formData.mohanagar}
-            onChange={handleChange}
-            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            required
-          >
-            <option value="Chattogram">Chattogram</option>
-            <option value="Dhaka">Dhaka</option>
-            <option value="Sylhet">Sylhet</option>
-          </select>
-        </div>
-
         <div className="lg:flex gap-4">
+          {/*  */}
+
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">Ward</label>
+            <label className="block text-sm font-semibold">BNP/JUBODOL</label>
             <select
-              name="ward"
-              value={formData.ward}
+              name="mohanagar"
+              value={formData.mohanagar}
               onChange={handleChange}
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             >
-              <option value="">Select Ward</option>
-              <option value="Ward 1">Ward 1</option>
-              <option value="Ward 2">Ward 2</option>
-              <option value="Ward 3">Ward 3</option>
+              <option value="Chattogram">BNP</option>
+              <option value="Dhaka">JUBODOL</option>
             </select>
           </div>
+          {/*  */}
+          <div className="mb-4 w-full">
+            <label className="block text-sm font-semibold">
+              Mohanagar/Jela
+            </label>
+            <select
+              name="mohanagar"
+              value={formData.mohanagar}
+              onChange={handleChange}
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+              required
+            >
+              <option value="Chattogram">Chattogram Mohanogor</option>
+              <option value="Dhaka">Chattogram Uttor jela</option>
+              <option value="Sylhet">Chattogram Dokkhin jela</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">Thana</label>
             <select
@@ -210,8 +215,39 @@ const SignUp = () => {
               <option value="Thana 3">Thana 3</option>
             </select>
           </div>
+          <div className="mb-4 w-full">
+            <label className="block text-sm font-semibold">Ward/union</label>
+            <select
+              name="ward"
+              value={formData.ward}
+              onChange={handleChange}
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+              required
+            >
+              <option value="">Select Ward</option>
+              <option value="Ward 1">Ward 1</option>
+              <option value="Ward 2">Ward 2</option>
+              <option value="Ward 3">Ward 3</option>
+            </select>
+          </div>
         </div>
-
+        {/* nitbachoni kendro */}
+        <div className="mb-4 w-full">
+          <label className="block text-sm font-semibold">
+            Nirbachoni Kendro
+          </label>
+          <select
+            name="mohanagar"
+            value={formData.mohanagar}
+            onChange={handleChange}
+            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            required
+          >
+            <option value="Chattogram">Nirbachoni Kendro</option>
+            <option value="Dhaka">Nirbachoni Kendro </option>
+            <option value="Sylhet">Nirbachoni Kendro </option>
+          </select>
+        </div>
         {/* File Uploads */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
