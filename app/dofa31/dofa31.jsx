@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "../lib/utils"; // Utility function for combining class names
-import { AnimatePresence, motion } from "framer-motion"; // Animation library
+// import { div, motion } from "framer-motion"; // Animation library
 import { useState } from "react";
 
 // Main Dofa10 Component
@@ -165,11 +165,10 @@ export const Dofa31 = ({ className }) => {
         "সকল নাগরিকের জন্য একটি নিরাপদ, শান্তিপূর্ণ এবং গণতান্ত্রিক বাংলাদেশ প্রতিষ্ঠায় সমন্বিত প্রচেষ্টা গ্রহণ করা হইবে।",
     },
   ];
-
   return (
     <div
       className={cn(
-        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-10", // Tailwind classes for layout
+        "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pb-10", // Tailwind classes for layout
         className
       )}
     >
@@ -180,20 +179,13 @@ export const Dofa31 = ({ className }) => {
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-red-700/[0.8] block rounded-3xl"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { duration: 0.15 } }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
-                }}
-              />
-            )}
-          </AnimatePresence>
+          <div
+            className={`absolute inset-0 h-full w-full ${
+              hoveredIndex === idx
+                ? "bg-neutral-200 dark:bg-red-700/[0.8]"
+                : "bg-transparent"
+            } block rounded-3xl transition-opacity duration-150`}
+          />
           <Card>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
@@ -209,7 +201,7 @@ export const Card = ({ className, children }) => {
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden bg-green-800 border border-transparent dark:border-yellow-300/[0.2] group-hover:border-yellow-300 relative z-20",
+        "rounded-2xl h-[400px] w-full p-4 overflow-hidden bg-green-800 border border-transparent dark:border-yellow-300/[0.2] group-hover:border-yellow-300 relative z-20",
         className
       )}
     >
@@ -239,7 +231,7 @@ export const CardDescription = ({ className, children }) => {
   return (
     <p
       className={cn(
-        "mt-4 text-yellow-400 font-semibold tracking-wide leading-relaxed text-lg",
+        "mt-8 text-yellow-400 font-bold tracking-wide leading-relaxed text-lg",
         className
       )}
     >

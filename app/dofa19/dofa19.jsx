@@ -1,6 +1,5 @@
 "use client";
 import { cn } from "../lib/utils"; // Utility function for combining class names
-import { AnimatePresence, motion } from "framer-motion"; // Animation library
 import { useState } from "react";
 
 // Main Dofa19 Component
@@ -116,20 +115,13 @@ export const Dofa19 = ({ className }) => {
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-red-700/[0.8] block rounded-3xl"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, transition: { duration: 0.15 } }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
-                }}
-              />
-            )}
-          </AnimatePresence>
+          <div
+            className={`absolute inset-0 h-full w-full ${
+              hoveredIndex === idx
+                ? "bg-neutral-200 dark:bg-red-700/[0.8]"
+                : "bg-transparent"
+            } block rounded-3xl transition-opacity duration-150`}
+          />
           <Card>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
