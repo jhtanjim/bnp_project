@@ -206,9 +206,9 @@ const SignUp = () => {
               required
             >
               <option value="">থানা নির্বাচন করুন</option>
-              <option value="Thana 1">থানা ১</option>
-              <option value="Thana 2">থানা ২</option>
-              <option value="Thana 3">থানা ৩</option>
+              <option value="বন্দর">বন্দর</option>
+              <option value="কোতোয়ালী">কোতোয়ালী</option>
+              <option value="কুলশী">কুলশী</option>
             </select>
           </div>
           <div className="mb-4 w-full">

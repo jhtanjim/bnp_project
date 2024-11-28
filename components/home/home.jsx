@@ -3,12 +3,21 @@ import SignIn from "@/app/(auth)/signIn/signIn";
 import { BnpDofa } from "@/app/bnpDofa/bnpDofa";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styles
 
 const Home = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div>
       {/* ব্যানার */}
@@ -44,7 +53,28 @@ const Home = () => {
         </Carousel>
       </div>
       {/* search */}
-      <div className="max-w-screen-xl lg:mx-auto mx-4 ">
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4">আপনার অনুসন্ধান ফলাফল</h3>
+            <p className="text-gray-700 mb-4">
+              এখানে আপনার অনুসন্ধান ফলাফল দেখানো হবে।
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                className="px-4 py-2 border rounded-lg"
+                onClick={closeModal}
+              >
+                বন্ধ করুন
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Search bar */}
+      <div className="max-w-screen-xl lg:mx-auto mx-4">
         <div className="flex justify-center items-center space-x-4 my-10">
           <div className="w-full md:w-[90%]">
             <label
@@ -62,7 +92,10 @@ const Home = () => {
             />
           </div>
           <div className="my-auto mt-10 lg:w-[10%]">
-            <button className="bg-green-600 text-white p-4 rounded-full hover:bg-red-700  transition duration-300 hover:text-yellow-500">
+            <button
+              className="bg-green-600 text-white p-4 rounded-full hover:bg-red-700 transition duration-300 hover:text-yellow-500"
+              onClick={openModal}
+            >
               <FaSearch size={20} />
             </button>
           </div>

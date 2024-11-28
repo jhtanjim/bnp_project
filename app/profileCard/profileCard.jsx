@@ -43,13 +43,15 @@ const ProfileCard = () => {
         </div>
 
         <div className="space-y-3  mb-6">
-          <InfoRow label="রাজনৈতিক পদবি" value="উদাহরণ" />
+          <InfoRow label="রাজনৈতিক পদবি" value="যুবদল" />
+          <InfoRow label="ইমেইল" value="bnp.ctg@gmail.com" />
           <InfoRow label="ফোন নম্বর" value="+8801857373883" />
           <InfoRow label="এনআইডি নম্বর" value="340 4747 38" />
           <InfoRow label="জন্ম তারিখ" value="01/02/1998" />
           <div className="flex gap-8">
             <InfoRow label="ওয়ার্ড" value="07" />
             <InfoRow label="থানা" value="চন্দগাঁও" />
+            <InfoRow label="নির্বাচনী কেন্দ্র" value="কেন্দ্র ১" />
           </div>
           <InfoRow label="মহানগর" value="চট্টগ্রাম" />
         </div>
