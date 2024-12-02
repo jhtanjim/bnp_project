@@ -55,7 +55,7 @@ const Navbar = () => {
             আমাদের সম্পর্কে
           </Link>
           <Link
-            href="#"
+            href="/video"
             className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             ভিডিও
