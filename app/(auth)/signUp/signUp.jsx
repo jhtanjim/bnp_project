@@ -91,7 +91,7 @@ const SignUp = () => {
             />
           </div>
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">ইমেইল ঠিকানা</label>
+            <label className="block text-sm font-semibold">ইমেইল এড্রেস</label>
             <input
               name="email"
               value={formData.email}
@@ -120,7 +120,7 @@ const SignUp = () => {
           </div>
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">
-              পাসওয়ার্ড নিশ্চিত করুন
+              কনফার্ম পাসওয়ার্ড
             </label>
             <input
               name="confirmPassword"
@@ -164,19 +164,49 @@ const SignUp = () => {
 
         {/* Dropdowns */}
         <div className="lg:flex gap-4">
+          {/* Radio buttons for বিএনপি/যুবদল */}
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">বিএনপি/যুবদল</label>
-            <select
-              name="mohanagar"
-              value={formData.mohanagar}
-              onChange={handleChange}
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-              required
-            >
-              <option value="চট্টগ্রাম">বিএনপি</option>
-              <option value="ঢাকা">যুবদল</option>
-              <option value="ঢাকা">ছাত্রদল</option>
-            </select>
+            <label className="block text-sm font-semibold mb-2">
+              বিএনপি/যুবদল
+            </label>
+            <div className="flex flex-col gap-2">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="party"
+                  value="বিএনপি"
+                  checked={formData.party === "বিএনপি"}
+                  onChange={handleChange}
+                  className="mr-2"
+                  required
+                />
+                বিএনপি
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="party"
+                  value="যুবদল"
+                  checked={formData.party === "যুবদল"}
+                  onChange={handleChange}
+                  className="mr-2"
+                  required
+                />
+                যুবদল
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="party"
+                  value="ছাত্রদল"
+                  checked={formData.party === "ছাত্রদল"}
+                  onChange={handleChange}
+                  className="mr-2"
+                  required
+                />
+                ছাত্রদল
+              </label>
+            </div>
           </div>
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">মহানগর/জেলা</label>
@@ -231,7 +261,7 @@ const SignUp = () => {
         {/* নির্বাচনী কেন্দ্র */}
         <div className="mb-4 w-full">
           <label className="block text-sm font-semibold">
-            নির্বাচনী কেন্দ্র
+            নির্বাচনী কেন্দ্র/ওয়ার্ড
           </label>
           <select
             name="mohanagar"
@@ -247,8 +277,9 @@ const SignUp = () => {
         </div>
 
         {/* ফাইল আপলোড */}
-        <div className="lg:flex gap-4">
-          <div className="mb-4 w-full">
+        {/* <div className="lg:flex gap-4"> */}
+        <div>
+          {/* <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">
               দস্তাবেজ আপলোড করুন
             </label>
@@ -258,7 +289,7 @@ const SignUp = () => {
               type="file"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             />
-          </div>
+          </div> */}
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">
               ছবি আপলোড করুন
