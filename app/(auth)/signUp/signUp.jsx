@@ -34,7 +34,7 @@ const SignUp = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validate form data
@@ -43,23 +43,61 @@ const SignUp = () => {
       return;
     }
 
-    console.log("Form submitted:", formData);
+    // Construct the required object
+    const submissionData = {
+      email: formData.email,
+      password: formData.password,
+      fullName: formData.fullName,
+      nid: formData.nid,
+      country: "Bangladesh", // Static value
+      mobile: formData.mobileNumber,
+      mohanagar: formData.mohanagar,
+      thana: formData.thana,
+      ward: formData.ward,
+      electionCenter: formData.mohanagar, // Adjusted for your input; ensure proper mapping
+      role: formData.party,
+      image: formData.image, // For file uploads, additional setup is needed
+    };
 
-    // Clear the form (optional)
-    setFormData({
-      fullName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      mobileNumber: "",
-      nid: "",
-      ward: "",
-      thana: "",
-      mohanagar: "চট্টগ্রাম",
-      politicalPost: "",
-      document: null,
-      image: null,
-    });
+    try {
+      // API call
+      const response = await fetch(
+        "https://bnp-api-9oht.onrender.com/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submissionData),
+        }
+      );
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert("সাইন আপ সফল হয়েছে!");
+        // Clear the form
+        setFormData({
+          fullName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          mobileNumber: "",
+          nid: "",
+          ward: "",
+          thana: "",
+          mohanagar: "চট্টগ্রাম",
+          politicalPost: "",
+          document: null,
+          image: null,
+        });
+      } else {
+        alert(result.message || "সাইন আপ ব্যর্থ হয়েছে!");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("সাইন আপের সময় ত্রুটি ঘটেছে। পরে আবার চেষ্টা করুন।");
+    }
   };
 
   return (
@@ -174,8 +212,8 @@ const SignUp = () => {
                 <input
                   type="radio"
                   name="party"
-                  value="বিএনপি"
-                  checked={formData.party === "বিএনপি"}
+                  value="BNP"
+                  checked={formData.party === "BNP"}
                   onChange={handleChange}
                   className="mr-2"
                   required
@@ -186,8 +224,8 @@ const SignUp = () => {
                 <input
                   type="radio"
                   name="party"
-                  value="যুবদল"
-                  checked={formData.party === "যুবদল"}
+                  value="JUBODOL"
+                  checked={formData.party === "JUBODOL"}
                   onChange={handleChange}
                   className="mr-2"
                   required
@@ -198,8 +236,8 @@ const SignUp = () => {
                 <input
                   type="radio"
                   name="party"
-                  value="ছাত্রদল"
-                  checked={formData.party === "ছাত্রদল"}
+                  value="CHATRODOL"
+                  checked={formData.party === "CHATRODOL"}
                   onChange={handleChange}
                   className="mr-2"
                   required

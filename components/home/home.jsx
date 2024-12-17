@@ -55,7 +55,7 @@ const Home = () => {
       {/* search */}
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className=" z-[1000] fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <h3 className="text-xl font-bold mb-4">আপনার অনুসন্ধান ফলাফল</h3>
             <p className="text-gray-700 mb-4">
