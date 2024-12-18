@@ -28,20 +28,25 @@ const SignUp = () => {
   };
 
   // Handle file upload
+  // Handle file upload
   const handleFileUpload = (e) => {
     const { name, files } = e.target;
-    setFormData({ ...formData, [name]: files[0] });
+    // Store only the file name
+    setFormData({
+      ...formData,
+      [name]: files[0] ? files[0].name : "",
+    });
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // Validate form data
     if (formData.password !== formData.confirmPassword) {
       alert("পাসওয়ার্ড মিলছে না!");
       return;
     }
+    console.log(formData);
 
     // Construct the required object
     const submissionData = {
@@ -56,7 +61,7 @@ const SignUp = () => {
       ward: formData.ward,
       electionCenter: formData.mohanagar, // Adjusted for your input; ensure proper mapping
       role: formData.party,
-      image: formData.image, // For file uploads, additional setup is needed
+      image: formData.image, // Now contains only the file name
     };
 
     try {
@@ -88,8 +93,7 @@ const SignUp = () => {
           thana: "",
           mohanagar: "চট্টগ্রাম",
           politicalPost: "",
-          document: null,
-          image: null,
+          image: "",
         });
       } else {
         alert(result.message || "সাইন আপ ব্যর্থ হয়েছে!");
