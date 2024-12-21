@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const SignUp = () => {
-  // State to manage form inputs
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -16,9 +15,9 @@ const SignUp = () => {
     ward: "",
     thana: "",
     mohanagar: "চট্টগ্রাম", // Default value for Mohanagar
+    electionCenter: "", // Added electionCenter
     politicalPost: "",
-    document: null,
-    image: null,
+    image: null, // Store the file object here
   });
 
   // Handle input change
@@ -28,52 +27,47 @@ const SignUp = () => {
   };
 
   // Handle file upload
-  // Handle file upload
   const handleFileUpload = (e) => {
     const { name, files } = e.target;
-    // Store only the file name
-    setFormData({
-      ...formData,
-      [name]: files[0] ? files[0].name : "",
-    });
+    setFormData({ ...formData, [name]: files[0] });
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate form data
     if (formData.password !== formData.confirmPassword) {
       alert("পাসওয়ার্ড মিলছে না!");
       return;
     }
-    console.log(formData);
-
-    // Construct the required object
-    const submissionData = {
-      email: formData.email,
-      password: formData.password,
-      fullName: formData.fullName,
-      nid: formData.nid,
-      country: "Bangladesh", // Static value
-      mobile: formData.mobileNumber,
-      mohanagar: formData.mohanagar,
-      thana: formData.thana,
-      ward: formData.ward,
-      electionCenter: formData.mohanagar, // Adjusted for your input; ensure proper mapping
-      role: formData.party,
-      image: formData.image, // Now contains only the file name
-    };
+    if (!formData.electionCenter) {
+      alert("নির্বাচনী কেন্দ্র নির্বাচন করুন!");
+      return;
+    }
 
     try {
+      // Construct FormData
+      const submissionData = new FormData();
+      submissionData.append("email", formData.email);
+      submissionData.append("password", formData.password);
+      submissionData.append("fullName", formData.fullName);
+      submissionData.append("nid", formData.nid);
+      submissionData.append("country", "Bangladesh"); // Static value
+      submissionData.append("mobile", formData.mobileNumber);
+      submissionData.append("mohanagar", formData.mohanagar);
+      submissionData.append("thana", formData.thana);
+      submissionData.append("ward", formData.ward);
+      submissionData.append("electionCenter", formData.electionCenter); // Added electionCenter
+      submissionData.append("role", formData.party);
+      if (formData.image) {
+        submissionData.append("image", formData.image);
+      }
+
       // API call
       const response = await fetch(
         "https://bnp-api-9oht.onrender.com/auth/signup",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(submissionData),
+          body: submissionData,
         }
       );
 
@@ -81,7 +75,6 @@ const SignUp = () => {
 
       if (response.ok) {
         alert("সাইন আপ সফল হয়েছে!");
-        // Clear the form
         setFormData({
           fullName: "",
           email: "",
@@ -92,8 +85,9 @@ const SignUp = () => {
           ward: "",
           thana: "",
           mohanagar: "চট্টগ্রাম",
+          electionCenter: "",
           politicalPost: "",
-          image: "",
+          image: null,
         });
       } else {
         alert(result.message || "সাইন আপ ব্যর্থ হয়েছে!");
@@ -299,50 +293,35 @@ const SignUp = () => {
             </select>
           </div>
         </div>
-
         {/* নির্বাচনী কেন্দ্র */}
         <div className="mb-4 w-full">
           <label className="block text-sm font-semibold">
-            নির্বাচনী কেন্দ্র/ওয়ার্ড
+            নির্বাচনী কেন্দ্র
           </label>
           <select
-            name="mohanagar"
-            value={formData.mohanagar}
+            name="electionCenter"
+            value={formData.electionCenter}
             onChange={handleChange}
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             required
           >
-            <option value="Chattogram">কেন্দ্র ১</option>
-            <option value="Dhaka">কেন্দ্র ২</option>
-            <option value="Sylhet">কেন্দ্র ৩</option>
+            <option value="">নির্বাচনী কেন্দ্র নির্বাচন করুন</option>
+            <option value="Center 1">কেন্দ্র ১</option>
+            <option value="Center 2">কেন্দ্র ২</option>
+            <option value="Center 3">কেন্দ্র ৩</option>
           </select>
         </div>
 
-        {/* ফাইল আপলোড */}
-        {/* <div className="lg:flex gap-4"> */}
-        <div>
-          {/* <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">
-              দস্তাবেজ আপলোড করুন
-            </label>
-            <input
-              name="document"
-              onChange={handleFileUpload}
-              type="file"
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            />
-          </div> */}
-          <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">
-              ছবি আপলোড করুন
-            </label>
-            <input
-              name="image"
-              onChange={handleFileUpload}
-              type="file"
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            />
-          </div>
+        {/* File Upload */}
+        <div className="mb-4 w-full">
+          <label className="block text-sm font-semibold">ছবি আপলোড করুন</label>
+          <input
+            name="image"
+            onChange={handleFileUpload}
+            type="file"
+            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            accept="image/*"
+          />
         </div>
 
         {/* Submit Button */}
