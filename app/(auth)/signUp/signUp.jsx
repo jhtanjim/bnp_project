@@ -3,8 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -15,9 +18,9 @@ const SignUp = () => {
     ward: "",
     thana: "",
     mohanagar: "চট্টগ্রাম", // Default value for Mohanagar
-    electionCenter: "", // Added electionCenter
+    electionCenter: "",
     politicalPost: "",
-    image: null, // Store the file object here
+    image: null,
   });
 
   // Handle input change
@@ -51,12 +54,12 @@ const SignUp = () => {
       submissionData.append("password", formData.password);
       submissionData.append("fullName", formData.fullName);
       submissionData.append("nid", formData.nid);
-      submissionData.append("country", "Bangladesh"); // Static value
+      submissionData.append("country", "Bangladesh");
       submissionData.append("mobile", formData.mobileNumber);
       submissionData.append("mohanagar", formData.mohanagar);
       submissionData.append("thana", formData.thana);
       submissionData.append("ward", formData.ward);
-      submissionData.append("electionCenter", formData.electionCenter); // Added electionCenter
+      submissionData.append("electionCenter", formData.electionCenter);
       submissionData.append("role", formData.party);
       if (formData.image) {
         submissionData.append("image", formData.image);
@@ -72,9 +75,17 @@ const SignUp = () => {
       );
 
       const result = await response.json();
-
+      console.log(result);
       if (response.ok) {
         alert("সাইন আপ সফল হয়েছে!");
+        setIsLoggedIn(true);
+
+        // Store user data in localStorage
+        localStorage.setItem("userData", JSON.stringify(result.user)); // Adjust result.user based on your API response
+
+        // Redirect after successful signup
+        router.push("/");
+
         setFormData({
           fullName: "",
           email: "",

@@ -3,27 +3,56 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 const SignIn = () => {
-  // ফর্ম ইনপুটের মান পরিচালনার জন্য স্টেট
+  const { login } = useAuth();
+  // State for form inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  // ফর্ম সাবমিট করার হ্যান্ডলার
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ফর্ম ডেটা কনসোলে লগ করা
-    console.log("ফর্ম জমা দেওয়া হয়েছে নিম্নলিখিত ডেটার সাথে:");
-    console.log("ইমেইল:", email);
-    console.log("পাসওয়ার্ড:", password);
+    // Check if the email or password is empty
+    if (!email || !password) {
+      alert("ইমেইল অথবা পাসওয়ার্ড ফাঁকা থাকতে পারে না!");
+      return;
+    }
 
-    // ফর্ম সাবমিশনের লজিক এখানে যোগ করুন (যেমন API রিকোয়েস্ট)
-    console.log("লগইন প্রচেষ্টা সফল!");
+    try {
+      // Construct the request payload
+      const response = await fetch(
+        "https://bnp-api-9oht.onrender.com/auth/signin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-    // ফর্ম ক্লিয়ার করা বা সফল বার্তা দেখানো (ঐচ্ছিক)
-    setEmail("");
-    setPassword("");
+      const result = await response.json();
+      console.log(result.user);
+      if (response.ok) {
+        // Handle successful login (e.g., store JWT token, redirect)
+        alert("লগইন সফল হয়েছে!");
+
+        login(result.token);
+        // Redirect to home page
+        router.push("/");
+      } else {
+        // Show error message if the login fails
+        alert(result.message || "লগইন ব্যর্থ হয়েছে!");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("লগইন করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+    }
   };
 
   return (
@@ -32,16 +61,16 @@ const SignIn = () => {
         <Image
           src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
           alt="লোগো"
-          width={96} // প্রয়োজন অনুযায়ী সামঞ্জস্য করুন
-          height={96} // প্রয়োজন অনুযায়ী সামঞ্জস্য করুন
-          priority // গুরুত্বপূর্ণ ইমেজ লোডের জন্য
+          width={96} // Adjust as necessary
+          height={96} // Adjust as necessary
+          priority // Important image loading
         />
         <h1 className="font-bold text-xl">চট্টগ্রাম মহানগর বিএনপি</h1>
       </div>
 
-      {/* ফর্ম */}
+      {/* Form */}
       <form className="max-w-md mx-auto my-4" onSubmit={handleSubmit}>
-        {/* ইমেইল ইনপুট */}
+        {/* Email input */}
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-semibold">
             ইমেইল ঠিকানা
@@ -49,7 +78,7 @@ const SignIn = () => {
           <input
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)} // ইমেইল ইনপুটকে স্টেটে সংযুক্ত করুন
+            onChange={(e) => setEmail(e.target.value)} // Bind email to state
             placeholder="আপনার ইমেইল লিখুন"
             type="email"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
@@ -57,7 +86,7 @@ const SignIn = () => {
           />
         </div>
 
-        {/* পাসওয়ার্ড ইনপুট */}
+        {/* Password input */}
         <div className="mb-4">
           <label htmlFor="password" className="block text-sm font-semibold">
             পাসওয়ার্ড
@@ -65,7 +94,7 @@ const SignIn = () => {
           <input
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)} // পাসওয়ার্ড ইনপুটকে স্টেটে সংযুক্ত করুন
+            onChange={(e) => setPassword(e.target.value)} // Bind password to state
             placeholder="••••••••"
             type="password"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
@@ -73,7 +102,7 @@ const SignIn = () => {
           />
         </div>
 
-        {/* সাবমিট বোতাম */}
+        {/* Submit button */}
         <button
           className="bg-[#16A34A] text-white p-2 w-full rounded hover:bg-[#F5CF0D] hover:text-red-500 font-bold"
           type="submit"
@@ -87,7 +116,7 @@ const SignIn = () => {
             </span>
           </Link>
         </p>
-        {/* সাইন আপ লিঙ্ক */}
+        {/* Sign-up link */}
         <p className="py-4 text-center">
           অ্যাকাউন্ট নেই?
           <Link href="/signUp">
