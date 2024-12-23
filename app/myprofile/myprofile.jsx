@@ -1,26 +1,46 @@
 "use client";
 import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const MyProfile = () => {
-  const { user } = useAuth();
+  const { user } = useAuth(); // Fetching user data from AuthContext
   console.log(user);
+
+  // Initialize profileData state with user data from context
   const [profileData, setProfileData] = useState({
-    name: "জন ডো",
-    id: "444001",
-    email: "info@gmail.com",
-    phone: "+8801857373883",
-    nid: "340 4747 38",
-    birthDate: "01/02/1998",
-    politicalPosition: "যুবদল",
-    ward: "ওয়ার্ড ১",
-    thana: "বন্দর",
-    mahanagar: "চট্টগ্রাম মহানগর",
-    PollingCenter: "কেন্দ্র ১",
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZAGlcoNry_9VmU7efhCQnpCnNAqKL_tVVYw&s",
+    name: "",
+    id: "",
+    email: "",
+    phone: "",
+    nid: "",
+    birthDate: "",
+    politicalPosition: "",
+    ward: "",
+    thana: "",
+    mahanagar: "",
+    PollingCenter: "",
+    image: "",
   });
+
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        name: user.full_name,
+        id: user.id,
+        email: user.email,
+        phone: user.mobile,
+        nid: user.nid,
+        birthDate: "Not Provided", // Update if the field is available
+        politicalPosition: user.role,
+        ward: user.ward,
+        thana: user.thana,
+        mahanagar: user.mohanagar,
+        PollingCenter: user.election_center,
+        image: user.image,
+      });
+    }
+  }, [user]);
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -57,7 +77,7 @@ const MyProfile = () => {
           <div className="flex items-center gap-4 mb-2">
             <div className="relative w-16 h-16 rounded-full overflow-hidden border-4 border-white shadow-md">
               <Image
-                src={profileData.image}
+                src={profileData.image || "/default-profile.png"} // Fallback image
                 alt="Profile"
                 fill
                 className="object-cover"
@@ -114,75 +134,14 @@ const MyProfile = () => {
                     <div key={rowIndex} className="grid grid-cols-2 gap-4">
                       {pair.map(([key, value]) => (
                         <div key={key} className="flex flex-col gap-2">
-                          <label htmlFor="{key} " className="font-medium">
+                          <label htmlFor={key} className="font-medium">
                             {key.charAt(0).toUpperCase() +
                               key
                                 .slice(1)
                                 .replace(/([A-Z])/g, " $1")
                                 .replace(/-/g, " ")}
                           </label>
-                          {key === "politicalPosition" ? (
-                            <select
-                              id={key}
-                              name="{key}"
-                              defaultValue={value}
-                              className="border rounded-lg p-2"
-                            >
-                              <option value="যুবদল">যুবদল</option>
-                              <option value="বিএনপি">বিএনপি</option>
-                              <option value="ছাত্রদল">ছাত্রদল</option>
-                            </select>
-                          ) : key === "ward" ? (
-                            <select
-                              id={key}
-                              name={key}
-                              defaultValue={value}
-                              className="border rounded-lg p-2"
-                            >
-                              <option value="ওয়ার্ড ১">ওয়ার্ড ১</option>
-                              <option value="ওয়ার্ড ২">ওয়ার্ড ২</option>
-                              <option value="ওয়ার্ড ৩">ওয়ার্ড ৩</option>
-                            </select>
-                          ) : key === "thana" ? (
-                            <select
-                              id={key}
-                              name={key}
-                              defaultValue={value}
-                              className="border rounded-lg p-2"
-                            >
-                              <option value="বন্দর">বন্দর</option>
-                              <option value="কোতোয়ালী">কোতোয়ালী</option>
-                              <option value="কুলশী">কুলশী</option>
-                            </select>
-                          ) : key === "mahanagar" ? (
-                            <select
-                              id={key}
-                              name={key}
-                              defaultValue={value}
-                              className="border rounded-lg p-2"
-                            >
-                              <option value="চট্টগ্রাম মহানগর">
-                                চট্টগ্রাম মহানগর
-                              </option>
-                              <option value="চট্টগ্রাম উত্তর জেলা">
-                                চট্টগ্রাম উত্তর জেলা
-                              </option>
-                              <option value="চট্টগ্রাম দক্ষিণ জেলা">
-                                চট্টগ্রাম দক্ষিণ জেলা
-                              </option>
-                            </select>
-                          ) : key === "PollingCenter" ? (
-                            <select
-                              id={key}
-                              name={key}
-                              defaultValue={value}
-                              className="border rounded-lg p-2"
-                            >
-                              <option value="কেন্দ্র ১">কেন্দ্র ১</option>
-                              <option value="কেন্দ্র ২">কেন্দ্র ২</option>
-                              <option value="কেন্দ্র ৩">কেন্দ্র ৩</option>
-                            </select>
-                          ) : key === "image" ? (
+                          {key === "image" ? (
                             <input
                               type="file"
                               id={key}
@@ -195,7 +154,13 @@ const MyProfile = () => {
                             <input
                               id={key}
                               name={key}
-                              defaultValue={value}
+                              value={value}
+                              onChange={(e) =>
+                                setProfileData((prevData) => ({
+                                  ...prevData,
+                                  [key]: e.target.value,
+                                }))
+                              }
                               className="border rounded-lg p-2"
                             />
                           )}

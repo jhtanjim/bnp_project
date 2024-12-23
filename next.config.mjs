@@ -8,6 +8,7 @@ const nextConfig = {
       "upload.wikimedia.org",
       "api.bnpbd.org",
       "encrypted-tbn0.gstatic.com",
+      "res.cloudinary.com",
     ],
   },
 };
