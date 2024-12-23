@@ -1,7 +1,11 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProfileCard = () => {
+  const { user } = useAuth();
+  console.log(user);
   const InfoRow = ({ label, value }) => (
     <div className="flex gap-4">
       <span className="text-gray-800 font-bold">{label}:</span>

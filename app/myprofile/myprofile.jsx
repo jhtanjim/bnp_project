@@ -1,8 +1,11 @@
 "use client";
+import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 import React, { useState } from "react";
 
 const MyProfile = () => {
+  const { user } = useAuth();
+  console.log(user);
   const [profileData, setProfileData] = useState({
     name: "জন ডো",
     id: "444001",

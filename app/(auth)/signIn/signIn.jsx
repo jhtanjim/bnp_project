@@ -24,7 +24,6 @@ const SignIn = () => {
     }
 
     try {
-      // Construct the request payload
       const response = await fetch(
         "https://bnp-api-9oht.onrender.com/auth/signin",
         {
@@ -37,21 +36,17 @@ const SignIn = () => {
       );
 
       const result = await response.json();
-      console.log(result.user);
-      if (response.ok) {
-        // Handle successful login (e.g., store JWT token, redirect)
-        alert("লগইন সফল হয়েছে!");
 
-        login(result.token);
-        // Redirect to home page
+      if (response.ok) {
+        alert("লগইন সফল হয়েছে!");
+        login(result.token, result.user);
         router.push("/");
       } else {
-        // Show error message if the login fails
-        alert(result.message || "লগইন ব্যর্থ হয়েছে!");
+        alert(result.message || "লগইন ব্যর্থ হয়েছে!");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("লগইন করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+      alert("লগইন করতে সমস্যা হয়েছে, আবার চেষ্টা করুন।");
     }
   };
 
