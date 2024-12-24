@@ -106,11 +106,60 @@ const Home = () => {
 
       <div className="max-w-screen-2xl lg:mx-auto mx-4">
         <div className="lg:flex gap-4">
-          <div className="w-full">
+          <div className="w-[30%] my-auto">
             <BnpDofa />
           </div>
-          <div className="w-full my-auto">
-            <SignIn />
+          <div className="w-[70%] ">
+            <SignIn className="" />
+            <div className="mt-[-60px]">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                <div className="rounded-lg overflow-hidden shadow-lg">
+                  <div className="aspect-w-16 aspect-h-9">
+                    <iframe
+                      src="https://www.youtube.com/embed/OsbiW19Mpio"
+                      title="ভিডিও ১"
+                      className="w-full h-80"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <p className="p-4 text-gray-700">
+                    ভিডিওতে আলোচিত বিষয়ের বিস্তারিত।
+                  </p>
+                </div>
+                <div className="rounded-lg overflow-hidden shadow-lg">
+                  <div className="aspect-w-16 aspect-h-9">
+                    <iframe
+                      src="https://www.youtube.com/embed/2tWPVCVSoaQ"
+                      title="ভিডিও ২"
+                      className="w-full h-80"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <p className="p-4 text-gray-700">
+                    আকর্ষণীয় তথ্য এবং বিশ্লেষণ।
+                  </p>
+                </div>
+                <div className="rounded-lg overflow-hidden shadow-lg">
+                  <div className="aspect-w-16 aspect-h-9">
+                    <iframe
+                      src="https://www.youtube.com/embed/2tWPVCVSoaQ"
+                      title="ভিডিও ২"
+                      className="w-full h-80"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  <p className="p-4 text-gray-700">
+                    আকর্ষণীয় তথ্য এবং বিশ্লেষণ।
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -17,18 +17,23 @@ const Navbar = () => {
     <nav className="sticky top-0 w-full bg-green-100 border-b border-gray-200 shadow-md z-50">
       <div className="container mx-auto flex items-center justify-between p-4">
         {/* Logo Section */}
-        <div className="flex items-center">
-          <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
-            alt="Logo"
-            width={40}
-            height={40}
-            className="h-10 w-10"
-          />
-          <span className="ml-2 text-lg font-bold text-green-800">
-            চট্টগ্রাম মহানগর বিএনপি
-          </span>
-        </div>
+        <Link href="/">
+          <div className="flex lg:block">
+            {" "}
+            <div className=" flex justify-center">
+              <Image
+                src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
+                alt="Logo"
+                width={40}
+                height={40}
+                className="h-16 lg:w-24 w-16 "
+              />
+            </div>
+            <span className="ml-2 lg:text-lg font-bold text-green-800 my-auto">
+              চট্টগ্রাম মহানগর বিএনপি
+            </span>
+          </div>
+        </Link>
 
         {/* Mobile Hamburger Icon */}
         <button
