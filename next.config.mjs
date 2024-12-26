@@ -9,6 +9,9 @@ const nextConfig = {
       "api.bnpbd.org",
       "encrypted-tbn0.gstatic.com",
       "res.cloudinary.com",
+      "projonmonews24.com",
+      "upload.wikimedia.org",
+      "api.bnpbd.org",
     ],
   },
 };

@@ -1,90 +1,158 @@
 "use client";
-import React from "react";
-import Image from "next/image";
 import { useAuth } from "@/contexts/AuthContext";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import Barcode from "react-barcode"; // Import Barcode library
+import { FaDownload } from "react-icons/fa";
 
 const ProfileCard = () => {
-  const { user } = useAuth();
+  const { user } = useAuth(); // Fetching user data from AuthContext
+  console.log(user);
 
-  // Check if user exists to prevent errors during loading
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  const [profileData, setProfileData] = useState({
+    name: "",
+    id: "",
+    email: "",
+    phone: "",
+    nid: "",
+    birthDate: "",
+    politicalPosition: "",
+    ward: "",
+    thana: "",
+    mahanagar: "",
+    pollingCenter: "",
+    image: "",
+  });
 
-  const InfoRow = ({ label, value }) => (
-    <div className="flex gap-4">
-      <span className="text-gray-800 font-bold">{label}:</span>
-      <span className="text-gray-700">{value}</span>
-    </div>
-  );
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        name: user.full_name || "N/A",
+        id: user.id || "N/A",
+        email: user.email || "N/A",
+        phone: user.mobile || "N/A",
+        nid: user.nid || "N/A",
+        birthDate: user.birthDate || "Not Provided",
+        politicalPosition: user.role || "N/A",
+        ward: user.ward || "N/A",
+        thana: user.thana || "N/A",
+        mahanagar: user.mohanagar || "N/A",
+        pollingCenter: user.election_center || "N/A",
+        image: user.image || "https://via.placeholder.com/150",
+      });
+    }
+  }, [user]);
 
   return (
-    <div className="my-20 flex items-center justify-center p-4">
-      <div className="w-full max-w-xl bg-[#e8f5e9] rounded-3xl p-6 relative">
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex items-center gap-4">
-            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white">
-              {/* Display user image dynamically */}
-              <Image
-                src={user.image} // Use user image from API
-                alt="Profile"
-                width={100}
-                height={100}
-                className="object-cover"
-              />
-            </div>
-            <div>
-              {/* Display user full name dynamically */}
-              <h2 className="text-2xl font-bold">{user.full_name}</h2>
-              {/* Display user id dynamically */}
-              <p className="text-gray-600">আইডি : {user.id}</p>
-            </div>
-          </div>
-
-          <div className="items-center">
+    <div className="max-w-[700px] lg:mx-auto mx-4 my-10">
+      <div className="border px-6 py-4 bg-white rounded-lg border-black">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4">
+          <div className="w-20 h-20 relative overflow-hidden rounded-full">
             <Image
               src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
-              alt="লোগো"
-              width={40} // Match 10 * 4 (tailwind rem unit)
-              height={40} // Match 10 * 4 (tailwind rem unit)
-              className="h-10 w-10"
+              alt="Bangladesh Nationalist Party Flag"
+              fill
+              style={{ objectFit: "cover" }}
+              priority
             />
-            <span className="font-bold text-green-800">
-              চট্টগ্রাম মহানগর বিএনপি
-            </span>
+          </div>
+
+          <h1 className="lg:text-xl md:text-3xl font-bold text-red-700 text-center">
+            বাংলাদেশ জাতীয়তাবাদী দল
+          </h1>
+
+          <div className="w-20 h-20 relative overflow-hidden rounded-full">
+            <Image
+              src="https://projonmonews24.com/uploads/news/18250/1509170062.jpg"
+              alt="Party Flag"
+              fill
+              style={{ objectFit: "cover" }}
+              priority
+            />
           </div>
         </div>
 
-        <div className="space-y-3  mb-6">
-          <InfoRow label="রাজনৈতিক পদবি" value={user.role} />
-          <InfoRow label="ইমেইল" value={user.email} />
-          <InfoRow label="ফোন নম্বর" value={user.mobile} />
-          <InfoRow label="এনআইডি নম্বর" value={user.nid} />
-          <InfoRow label="জন্ম তারিখ" value="Not Provided" />{" "}
-          {/* You can adjust this if you have the date */}
-          <div className="flex gap-8">
-            <InfoRow label="ওয়ার্ড" value={user.ward} />
-            <InfoRow label="থানা" value={user.thana} />
-            <InfoRow label="নির্বাচনী কেন্দ্র" value={user.election_center} />
+        {/* ID Section */}
+        <div className="flex flex-col sm:flex-row mx-4 justify-between gap-4">
+          <div className="my-4 font-bold">
+            <p className="">আইডি নং : {profileData.id}</p>
           </div>
-          <InfoRow label="মহানগর" value={user.mohanagar} />
+          <div className="flex justify-center">
+            {/* Render the barcode */}
+            <Barcode
+              className="max-w-full"
+              value={profileData.id.slice(-8) || "00000000"} // Use the last 8 digits of the ID
+              width={2.2}
+              height={40}
+              displayValue={false} // Hides the value below the barcode
+            />
+          </div>
         </div>
 
-        <button className="w-full bg-green-500 hover:bg-green-600 text-white py-2.5 px-4 rounded-lg font-medium flex items-center justify-center gap-2">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            />
-          </svg>
-          আইডি কার্ড ডাউনলোড করুন
+        {/* Profile Details */}
+        <div
+          className="flex flex-col md:flex-row gap-6 items-center relative"
+          style={{
+            backgroundColor: "white", // Set background color to white
+          }}
+        >
+          {/* Background Image Wrapper */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                'url("https://upload.wikimedia.org/wikipedia/commons/0/02/Bangladesh_Nationalist_Party_Election_Symbol.svg")',
+              backgroundPosition: "bottom right",
+              backgroundSize: "auto 200px", // Adjust height of background image
+              backgroundRepeat: "no-repeat",
+              opacity: 0.2, // Decrease opacity for background image only
+            }}
+          ></div>
+
+          {/* Profile Content */}
+          <img
+            src={profileData.image}
+            alt="Profile Image"
+            className="h-52 w-44 object-cover border-2 border-black/10 rounded-md mx-auto md:mx-0"
+          />
+          <div className="flex-1 space-y-3 font-bold">
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
+              <span className="min-w-[100px]">নাম</span>
+              <span>: {profileData.name}</span>
+            </div>
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
+              <span className="min-w-[100px]">সদস্য ধরণ</span>
+              <span className="text-green-600">
+                : {profileData.politicalPosition}
+              </span>
+            </div>
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
+              <span className="min-w-[100px]">ইউনিট</span>
+              <span className="text-red-600">: {profileData.mahanagar}</span>
+            </div>
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
+              <span className="min-w-[100px]">থানা</span>
+              <span>: {profileData.thana}</span>
+            </div>
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
+              <span className="min-w-[100px]">ওয়ার্ড</span>
+              <span>: {profileData.ward}</span>
+            </div>
+            <div className="flex flex-wrap md:flex-nowrap gap-4">
+              <span className="min-w-[100px]">ইস্যু তারিখ</span>
+              <span>: {profileData.birthDate}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="my-2">
+        <button
+          className="w-full text-green-700 hover:text-yellow-500 font-bold py-2 px-4 rounded-lg f"
+          onClick={() => setIsEditing(true)}
+        >
+          আইডি কার্ড ডাউনলোড
         </button>
       </div>
     </div>
