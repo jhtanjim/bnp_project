@@ -1,9 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+
+const thanas = [
+  { code: "AK", name: "Akbarshah Thana", wards: ["10"] },
+  { code: "BA", name: "Bakoliya Thana", wards: ["17", "18", "19", "35"] },
+  { code: "BD", name: "Bandar Thana", wards: ["36", "37", "38", "39"] },
+  { code: "BY", name: "Bayazid Thana", wards: ["02"] },
+  { code: "CH", name: "Chandgaon Thana", wards: ["04", "05", "06"] },
+  { code: "CB", name: "Chawkbazar Thana", wards: ["15", "16"] },
+  {
+    code: "DM",
+    name: "Double Mooring Thana",
+    wards: ["12", "23", "24", "27", "28", "29", "30"],
+  },
+  { code: "EP", name: "EPZ Thana", wards: ["39", "40", "41"] },
+  { code: "HA", name: "Halishahar Thana", wards: ["11", "24", "25", "26"] },
+  { code: "KH", name: "Khulshi Thana", wards: ["08", "09", "13", "14"] },
+  {
+    code: "KT",
+    name: "Kotwali Thana",
+    wards: ["20", "21", "22", "30", "31", "32", "33", "34", "35", "15", "16"],
+  },
+  { code: "PA", name: "Pahartali Thana", wards: ["09", "11", "12"] },
+  {
+    code: "PC",
+    name: "Panchlaish Thana",
+    wards: ["01", "02", "03", "07", "08", "15", "16"],
+  },
+  { code: "PT", name: "Patenga Thana", wards: ["39", "40", "41"] },
+  { code: "SD", name: "Sadarghat Thana", wards: ["30", "35"] },
+];
 
 const SignUp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,16 +47,28 @@ const SignUp = () => {
     nid: "",
     ward: "",
     thana: "",
-    mohanagar: "চট্টগ্রাম", // Default value for Mohanagar
+    mohanagar: "CT", // Default value for Mohanagar
     electionCenter: "",
     politicalPost: "",
     image: null,
   });
 
+  const [wards, setWards] = useState([]); // State to store the wards of selected thana
+
   // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle thana selection and update wards
+  const handleThanaChange = (e) => {
+    const selectedThanaCode = e.target.value;
+    const selectedThana = thanas.find(
+      (thana) => thana.code === selectedThanaCode
+    );
+    setFormData({ ...formData, thana: selectedThanaCode, ward: "" });
+    setWards(selectedThana ? selectedThana.wards : []);
   };
 
   // Handle file upload
@@ -36,19 +78,48 @@ const SignUp = () => {
   };
 
   // Handle form submission
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validation checks
     if (formData.password !== formData.confirmPassword) {
       alert("পাসওয়ার্ড মিলছে না!");
       return;
     }
+
     if (!formData.electionCenter) {
       alert("নির্বাচনী কেন্দ্র নির্বাচন করুন!");
       return;
     }
 
+    // Validate userType (party)
+    const validUserTypes = ["BNP", "CHATRODOL", "JUBODOL"];
+    if (!validUserTypes.includes(formData.party)) {
+      alert("বিএনপি, ছাত্রদল বা যুবদল নির্বাচন করুন!");
+      return;
+    }
+
+    // Validate mohanagarCode (mohanagar should be a string and not empty)
+    if (!formData.mohanagar || typeof formData.mohanagar !== "string") {
+      alert("মহানগর নির্বাচন করুন!");
+      return;
+    }
+
+    // Validate thanaCode (thana should be a string and not empty)
+    if (!formData.thana || typeof formData.thana !== "string") {
+      alert("থানা নির্বাচন করুন!");
+      return;
+    }
+
+    // Validate wardCode (ward should be a string and not empty)
+    if (!formData.ward || typeof formData.ward !== "string") {
+      alert("ওয়ার্ড নির্বাচন করুন!");
+      return;
+    }
+
     try {
-      // Construct FormData
+      // Construct FormData for API submission
       const submissionData = new FormData();
       submissionData.append("email", formData.email);
       submissionData.append("password", formData.password);
@@ -56,16 +127,16 @@ const SignUp = () => {
       submissionData.append("nid", formData.nid);
       submissionData.append("country", "Bangladesh");
       submissionData.append("mobile", formData.mobileNumber);
-      submissionData.append("mohanagar", formData.mohanagar);
-      submissionData.append("thana", formData.thana);
-      submissionData.append("ward", formData.ward);
+      submissionData.append("mohanagarCode", formData.mohanagar);
+      submissionData.append("thanaCode", formData.thana);
+      submissionData.append("wardCode", formData.ward);
       submissionData.append("electionCenter", formData.electionCenter);
-      submissionData.append("role", formData.party);
+      submissionData.append("userType", formData.party);
       if (formData.image) {
         submissionData.append("image", formData.image);
       }
 
-      // API call
+      // API call to submit the form data
       const response = await fetch(
         "https://bnp-api-9oht.onrender.com/auth/signup",
         {
@@ -81,11 +152,12 @@ const SignUp = () => {
         setIsLoggedIn(true);
 
         // Store user data in localStorage
-        localStorage.setItem("userData", JSON.stringify(result.user)); // Adjust result.user based on your API response
+        localStorage.setItem("userData", JSON.stringify(result.user));
 
         // Redirect after successful signup
         router.push("/");
 
+        // Reset form
         setFormData({
           fullName: "",
           email: "",
@@ -211,7 +283,7 @@ const SignUp = () => {
 
         {/* Dropdowns */}
         <div className="lg:flex gap-4">
-          {/* Radio buttons for বিএনপি/যুবদল */}
+          {/* Radio buttons for BNP/Jubodol */}
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold mb-2">
               বিএনপি/যুবদল
@@ -255,39 +327,27 @@ const SignUp = () => {
               </label>
             </div>
           </div>
-          <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">মহানগর/জেলা</label>
-            <select
-              name="mohanagar"
-              value={formData.mohanagar}
-              onChange={handleChange}
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-              required
-            >
-              <option value="চট্টগ্রাম">চট্টগ্রাম মহানগর</option>
-              <option value="ঢাকা">চট্টগ্রাম উত্তর জেলা</option>
-              <option value="সিলেট">চট্টগ্রাম দক্ষিণ জেলা</option>
-            </select>
-          </div>
-        </div>
 
-        {/* থানা এবং ওয়ার্ড */}
-        <div className="lg:flex gap-4">
+          {/* Thana Dropdown */}
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">থানা</label>
             <select
               name="thana"
               value={formData.thana}
-              onChange={handleChange}
+              onChange={handleThanaChange}
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             >
               <option value="">থানা নির্বাচন করুন</option>
-              <option value="বন্দর">বন্দর</option>
-              <option value="কোতোয়ালী">কোতোয়ালী</option>
-              <option value="কুলশী">কুলশী</option>
+              {thanas.map((thana) => (
+                <option key={thana.code} value={thana.code}>
+                  {thana.name}
+                </option>
+              ))}
             </select>
           </div>
+
+          {/* Ward Dropdown */}
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">ওয়ার্ড/ইউনিয়ন</label>
             <select
@@ -298,13 +358,16 @@ const SignUp = () => {
               required
             >
               <option value="">ওয়ার্ড নির্বাচন করুন</option>
-              <option value="Ward 1">ওয়ার্ড ১</option>
-              <option value="Ward 2">ওয়ার্ড ২</option>
-              <option value="Ward 3">ওয়ার্ড ৩</option>
+              {wards.map((ward, index) => (
+                <option key={index} value={ward}>
+                  ওয়ার্ড {ward}
+                </option>
+              ))}
             </select>
           </div>
         </div>
-        {/* নির্বাচনী কেন্দ্র */}
+
+        {/* Election Center */}
         <div className="mb-4 w-full">
           <label className="block text-sm font-semibold">
             নির্বাচনী কেন্দ্র
@@ -317,38 +380,29 @@ const SignUp = () => {
             required
           >
             <option value="">নির্বাচনী কেন্দ্র নির্বাচন করুন</option>
-            <option value="Center 1">কেন্দ্র ১</option>
-            <option value="Center 2">কেন্দ্র ২</option>
-            <option value="Center 3">কেন্দ্র ৩</option>
+            <option value="Election Center 1">Election Center 1</option>
+            <option value="Election Center 2">Election Center 2</option>
+            <option value="Election Center 3">Election Center 3</option>
           </select>
         </div>
 
-        {/* File Upload */}
+        {/* Image Upload */}
         <div className="mb-4 w-full">
-          <label className="block text-sm font-semibold">ছবি আপলোড করুন</label>
+          <label className="block text-sm font-semibold">প্রোফাইল ছবি</label>
           <input
+            type="file"
             name="image"
             onChange={handleFileUpload}
-            type="file"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            accept="image/*"
           />
         </div>
 
-        {/* Submit Button */}
         <button
-          className="bg-[#16A34A] text-white p-2 w-full rounded hover:bg-[#F5CF0D] hover:text-red-500 font-bold"
           type="submit"
+          className="bg-blue-500 text-white rounded-2xl px-6 py-2 mt-6 w-full"
         >
-          সাইন আপ &rarr;
+          সাইন আপ করুন
         </button>
-
-        <p className="py-4 text-center">
-          ইতোমধ্যে একটি অ্যাকাউন্ট আছে?{" "}
-          <Link href="/signIn">
-            <span className="text-blue-800 font-semibold">সাইন ইন</span>
-          </Link>
-        </p>
       </form>
     </div>
   );

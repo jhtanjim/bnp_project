@@ -39,7 +39,7 @@ const UserAll = () => {
                     {user.fullName}
                   </h2>
                   <p className="text-sm text-gray-500">
-                    <strong>Role:</strong> {user.role}
+                    <strong>Role:</strong> {user.userType}
                   </p>
                   <p className="text-sm text-gray-500">
                     <strong>Mobile:</strong> {user.mobile}
