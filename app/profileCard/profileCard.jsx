@@ -27,18 +27,18 @@ const ProfileCard = () => {
   useEffect(() => {
     if (user) {
       setProfileData({
-        name: user.full_name || "N/A",
-        id: user.id || "N/A",
+        name: user.full_name || "N/A", // 'full_name' from API data
+        id: user.userId || "N/A", // 'userId' from API data
         email: user.email || "N/A",
-        phone: user.mobile || "N/A",
+        phone: user.mobile || "N/A", // 'mobile' from API data
         nid: user.nid || "N/A",
-        birthDate: user.birthDate || "Not Provided",
-        politicalPosition: user.role || "N/A",
-        ward: user.ward || "N/A",
-        thana: user.thana || "N/A",
-        mahanagar: user.mohanagar || "N/A",
+        birthDate: user.created_at || "Not Provided", // Use created_at as a placeholder for birthDate
+        politicalPosition: user.user_type || "N/A", // 'user_type' from API data
+        ward: user.wardId || "N/A", // 'wardId' from API data
+        thana: user.thanaId || "N/A", // 'thanaId' from API data
+        mahanagar: user.mohanagarId || "N/A", // 'mohanagarId' from API data
         pollingCenter: user.election_center || "N/A",
-        image: user.image || "https://via.placeholder.com/150",
+        image: user.image || "https://via.placeholder.com/150", // Default image if not found
       });
     }
   }, [user]);
@@ -143,13 +143,19 @@ const ProfileCard = () => {
               <span className="min-w-[100px]">ইস্যু তারিখ</span>
               <span>: {profileData.birthDate}</span>
             </div>
+            <div className="">
+              <span className="text-xs">
+                এই কার্ডটি শুধুমাত্র বি এন পির সাংগঠনিক কর্মকান্ডের
+                জন্য প্রযোজ্য
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="my-2">
         <button
-          className="w-full text-green-700 hover:text-yellow-500 font-bold py-2 px-4 rounded-lg f"
+          className="w-full text-green-700 hover:text-yellow-500 font-bold py-2 px-4 rounded-lg"
           onClick={() => setIsEditing(true)}
         >
           আইডি কার্ড ডাউনলোড

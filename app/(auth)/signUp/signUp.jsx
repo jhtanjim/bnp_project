@@ -47,7 +47,7 @@ const SignUp = () => {
     nid: "",
     ward: "",
     thana: "",
-    mohanagar: "CT", // Default value for Mohanagar
+    mohanagar: "",
     electionCenter: "",
     politicalPost: "",
     image: null,
@@ -78,10 +78,13 @@ const SignUp = () => {
   };
 
   // Handle form submission
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    // mohanagar code
+    if (!formData.mohanagar || formData.mohanagar === "") {
+      alert("মহানগর নির্বাচন করুন!");
+      return;
+    }
     // Validation checks
     if (formData.password !== formData.confirmPassword) {
       alert("পাসওয়ার্ড মিলছে না!");
@@ -127,7 +130,7 @@ const SignUp = () => {
       submissionData.append("nid", formData.nid);
       submissionData.append("country", "Bangladesh");
       submissionData.append("mobile", formData.mobileNumber);
-      submissionData.append("mohanagarCode", formData.mohanagar);
+      submissionData.append("mohanagar", formData.mohanagar);
       submissionData.append("thanaCode", formData.thana);
       submissionData.append("wardCode", formData.ward);
       submissionData.append("electionCenter", formData.electionCenter);
@@ -167,7 +170,7 @@ const SignUp = () => {
           nid: "",
           ward: "",
           thana: "",
-          mohanagar: "চট্টগ্রাম",
+          mohanagar: "",
           electionCenter: "",
           politicalPost: "",
           image: null,
@@ -239,7 +242,7 @@ const SignUp = () => {
           </div>
           <div className="mb-4 w-full">
             <label className="block text-sm font-semibold">
-              কনফার্ম পাসওয়ার্ড
+              পাসওয়ার্ড পুনরায় লিখুন
             </label>
             <input
               name="confirmPassword"
@@ -253,27 +256,31 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* Mobile Number and NID */}
+        {/* Mobile and NID */}
         <div className="lg:flex gap-4">
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">মোবাইল নম্বর</label>
+            <label className="block text-sm font-semibold">
+              মোবাইল নাম্বার
+            </label>
             <input
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-              placeholder="+৮৮০১"
+              placeholder="০১৭xxxxxxxx"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
             />
           </div>
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">এনআইডি</label>
+            <label className="block text-sm font-semibold">
+              এনআইডি নাম্বার
+            </label>
             <input
               name="nid"
               value={formData.nid}
               onChange={handleChange}
-              placeholder="এনআইডি নম্বর"
+              placeholder="এনআইডি নাম্বার"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
@@ -281,56 +288,44 @@ const SignUp = () => {
           </div>
         </div>
 
-        {/* Dropdowns */}
+        <div className="mb-4 w-full">
+          <label className="block text-sm font-semibold">
+            মহানগর নির্বাচন করুন
+          </label>
+          <input
+            name="mohanagar"
+            value={formData.mohanagar}
+            onChange={handleChange}
+            placeholder="মহানগর নির্বাচন করুন"
+            type="text"
+            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            required
+          />
+        </div>
+
+        {/* Party and Thana */}
         <div className="lg:flex gap-4">
-          {/* Radio buttons for BNP/Jubodol */}
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold mb-2">
-              বিএনপি/যুবদল
-            </label>
-            <div className="flex flex-col gap-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="party"
-                  value="BNP"
-                  checked={formData.party === "BNP"}
-                  onChange={handleChange}
-                  className="mr-2"
-                  required
-                />
-                বিএনপি
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="party"
-                  value="JUBODOL"
-                  checked={formData.party === "JUBODOL"}
-                  onChange={handleChange}
-                  className="mr-2"
-                  required
-                />
-                যুবদল
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="party"
-                  value="CHATRODOL"
-                  checked={formData.party === "CHATRODOL"}
-                  onChange={handleChange}
-                  className="mr-2"
-                  required
-                />
-                ছাত্রদল
-              </label>
-            </div>
+            <label className="block text-sm font-semibold">পদবি</label>
+            <select
+              name="party"
+              value={formData.party}
+              onChange={handleChange}
+              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+              required
+            >
+              <option value="">পদবি নির্বাচন করুন</option>
+              <option value="BNP">বিএনপি</option>
+              <option value="CHATRODOL">ছাত্রদল</option>
+              <option value="JUBODOL">যুবদল</option>
+            </select>
           </div>
 
-          {/* Thana Dropdown */}
+          {/* Select Thana */}
           <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">থানা</label>
+            <label className="block text-sm font-semibold">
+              থানা নির্বাচন করুন
+            </label>
             <select
               name="thana"
               value={formData.thana}
@@ -346,25 +341,27 @@ const SignUp = () => {
               ))}
             </select>
           </div>
+        </div>
 
-          {/* Ward Dropdown */}
-          <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">ওয়ার্ড/ইউনিয়ন</label>
-            <select
-              name="ward"
-              value={formData.ward}
-              onChange={handleChange}
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-              required
-            >
-              <option value="">ওয়ার্ড নির্বাচন করুন</option>
-              {wards.map((ward, index) => (
-                <option key={index} value={ward}>
-                  ওয়ার্ড {ward}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Select Ward */}
+        <div className="mb-4 w-full">
+          <label className="block text-sm font-semibold">
+            ওয়ার্ড নির্বাচন করুন
+          </label>
+          <select
+            name="ward"
+            value={formData.ward}
+            onChange={handleChange}
+            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            required
+          >
+            <option value="">ওয়ার্ড নির্বাচন করুন</option>
+            {wards.map((ward) => (
+              <option key={ward} value={ward}>
+                {ward}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Election Center */}
@@ -372,37 +369,38 @@ const SignUp = () => {
           <label className="block text-sm font-semibold">
             নির্বাচনী কেন্দ্র
           </label>
-          <select
+          <input
             name="electionCenter"
             value={formData.electionCenter}
             onChange={handleChange}
+            placeholder="নির্বাচনী কেন্দ্র"
+            type="text"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             required
-          >
-            <option value="">নির্বাচনী কেন্দ্র নির্বাচন করুন</option>
-            <option value="Election Center 1">Election Center 1</option>
-            <option value="Election Center 2">Election Center 2</option>
-            <option value="Election Center 3">Election Center 3</option>
-          </select>
+          />
         </div>
 
         {/* Image Upload */}
         <div className="mb-4 w-full">
           <label className="block text-sm font-semibold">প্রোফাইল ছবি</label>
           <input
-            type="file"
             name="image"
+            type="file"
+            accept="image/*"
             onChange={handleFileUpload}
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
           />
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-500 text-white rounded-2xl px-6 py-2 mt-6 w-full"
-        >
-          সাইন আপ করুন
-        </button>
+        {/* Submit Button */}
+        <div className="mt-6">
+          <button
+            type="submit"
+            className="w-full px-6 py-3 bg-blue-600 text-white text-lg font-bold rounded-2xl"
+          >
+            সাইন আপ করুন
+          </button>
+        </div>
       </form>
     </div>
   );
