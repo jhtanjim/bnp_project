@@ -26,16 +26,16 @@ const MyProfile = () => {
   useEffect(() => {
     if (user) {
       setProfileData({
-        name: user.full_name,
+        name: user.fullName,
         id: user.userId,
         email: user.email,
         phone: user.mobile,
         nid: user.nid,
         birthDate: "Not Provided", // Update if the field is available
-        politicalPosition: user.user_type,
-        ward: user.wardId,
-        thana: user.thanaId,
-        mahanagar: user.mohanagarId,
+        politicalPosition: user.userType,
+        ward: user.ward,
+        thana: user.thana,
+        mahanagar: user.mohanagar,
         PollingCenter: user.election_center,
         image: user.image,
       });
