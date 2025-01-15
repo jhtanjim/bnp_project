@@ -27,17 +27,17 @@ const ProfileCard = () => {
   useEffect(() => {
     if (user) {
       setProfileData({
-        name: user.full_name || "N/A", // 'full_name' from API data
+        name: user.fullName || "N/A", // 'full_name' from API data
         id: user.userId || "N/A", // 'userId' from API data
         email: user.email || "N/A",
         phone: user.mobile || "N/A", // 'mobile' from API data
         nid: user.nid || "N/A",
         birthDate: user.created_at || "Not Provided", // Use created_at as a placeholder for birthDate
-        politicalPosition: user.user_type || "N/A", // 'user_type' from API data
-        ward: user.wardId || "N/A", // 'wardId' from API data
-        thana: user.thanaId || "N/A", // 'thanaId' from API data
-        mahanagar: user.mohanagarId || "N/A", // 'mohanagarId' from API data
-        pollingCenter: user.election_center || "N/A",
+        politicalPosition: user.userType || "N/A", // 'user_type' from API data
+        ward: user.ward || "N/A", // 'wardId' from API data
+        thana: user.thana || "N/A", // 'thanaId' from API data
+        mahanagar: user.mohanagar || "N/A", // 'mohanagarId' from API data
+        pollingCenter: user.electionCenter || "N/A",
         image: user.image || "https://via.placeholder.com/150", // Default image if not found
       });
     }

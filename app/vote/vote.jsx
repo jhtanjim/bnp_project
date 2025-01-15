@@ -1,65 +1,25 @@
 "use client";
-import React, { useState } from "react";
-
-const election = {
-  id: "1",
-  title: "Presidential Election",
-  level: "National",
-  isActive: true,
-  createdAt: "2024-01-01T00:00:00Z",
-  updatedAt: "2024-01-05T00:00:00Z",
-  posts: [
-    {
-      id: "101",
-      name: "President",
-      nominees: [
-        {
-          userId: "501",
-          name: "John Doe",
-          accepted: true,
-        },
-      ],
-      candidates: [
-        {
-          userId: "601",
-          name: "Jane Smith",
-        },
-        {
-          userId: "602",
-          name: "Jane Doe",
-        },
-      ],
-    },
-    {
-      id: "102",
-      name: "Vice President",
-      nominees: [
-        {
-          userId: "5023",
-          name: "John Doe",
-          accepted: true,
-        },
-      ],
-      candidates: [
-        {
-          userId: "603",
-          name: "Sam Smith",
-        },
-      ],
-    },
-  ],
-};
+import React, { useEffect, useState } from "react";
 
 const Vote = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [votedCandidates, setVotedCandidates] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [elections, setElections] = useState(null);
 
   // Simulated user token (replace with actual authentication token)
   const userToken = "user-token-from-login";
 
-  // Get data for the current post
-  const currentPost = election.posts[currentPage - 1];
+  useEffect(() => {
+    // Fetch the election data
+    fetch("https://bnp-api-9oht.onrender.com/election/summary")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setElections(data); // Store the fetched data in state
+      })
+      .catch((error) => console.error("Error fetching elections:", error));
+  }, []);
 
   // Handle voting
   const handleVote = async (postId, candidateId) => {
@@ -88,56 +48,70 @@ const Vote = () => {
     }
   };
 
+  // Check if elections data is loaded
+  if (!elections) return <div>Loading...</div>;
+
+  // Get the current post for the current page
+  const currentPost = elections[currentPage - 1]?.posts || [];
+
   return (
     <div className="font-sans text-center my-20">
       {/* Header */}
       <h3 className="text-red-600 text-lg font-semibold">
         আপনার প্রার্থী নির্বাচন করুন
       </h3>
-      <h4 className="text-lg font-medium mt-2">{currentPost.name} প্রার্থী</h4>
+      {currentPost.length > 0 && (
+        <>
+          <h4 className="text-lg font-medium mt-2">
+            {currentPost[0].name} প্রার্থী
+          </h4>
 
-      {/* Success Message */}
-      {successMessage && (
-        <p className="text-green-600 font-bold my-3">{successMessage}</p>
+          {/* Success Message */}
+          {successMessage && (
+            <p className="text-green-600 font-bold my-3">{successMessage}</p>
+          )}
+
+          {/* Table */}
+          <table className="mx-auto mt-5 border-collapse w-3/5">
+            <thead>
+              <tr>
+                <th className="border border-gray-300 px-4 py-2 bg-green-300">
+                  প্রার্থীর নাম
+                </th>
+                <th className="border border-gray-300 px-4 py-2 bg-green-300">
+                  ভোট দিন
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentPost.map((candidate, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-300 px-4 py-2 bg-green-100">
+                    {candidate.name}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2 bg-green-100">
+                    <button
+                      onClick={() =>
+                        handleVote(currentPost[0].id, candidate.id)
+                      }
+                      disabled={votedCandidates.includes(candidate.id)}
+                      className={`px-4 py-2 rounded ${
+                        votedCandidates.includes(candidate.id)
+                          ? "bg-gray-400 text-gray-700 cursor-not-allowed"
+                          : "bg-green-500 text-white hover:bg-green-600"
+                      }`}
+                    >
+                      {votedCandidates.includes(candidate.id)
+                        ? "ভোট দেওয়া হয়েছে"
+                        : "ভোট দিন"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
       )}
-
-      {/* Table */}
-      <table className="mx-auto mt-5 border-collapse w-3/5">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2 bg-green-300">
-              প্রার্থীর নাম
-            </th>
-            <th className="border border-gray-300 px-4 py-2 bg-green-300">
-              ভোট দিন
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentPost.candidates.map((candidate, index) => (
-            <tr key={index}>
-              <td className="border border-gray-300 px-4 py-2 bg-green-100">
-                {candidate.name}
-              </td>
-              <td className="border border-gray-300 px-4 py-2 bg-green-100">
-                <button
-                  onClick={() => handleVote(currentPost.id, candidate.userId)}
-                  disabled={votedCandidates.includes(candidate.userId)}
-                  className={`px-4 py-2 rounded ${
-                    votedCandidates.includes(candidate.userId)
-                      ? "bg-gray-400 text-gray-700 cursor-not-allowed"
-                      : "bg-green-500 text-white hover:bg-green-600"
-                  }`}
-                >
-                  {votedCandidates.includes(candidate.userId)
-                    ? "ভোট দেওয়া হয়েছে"
-                    : "ভোট দিন"}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
 
       {/* Footer */}
       <div className="mt-5">
@@ -146,7 +120,7 @@ const Vote = () => {
         </p>
         <div className="space-x-2">
           {/* Pagination */}
-          {election.posts.map((_, index) => (
+          {elections.map((election, index) => (
             <button
               key={index}
               onClick={() => setCurrentPage(index + 1)}
