@@ -5,6 +5,7 @@ const Vote = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [votedCandidates, setVotedCandidates] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [elections, setElections] = useState(null);
 
   // Simulated user token (replace with actual authentication token)
@@ -18,12 +19,20 @@ const Vote = () => {
         console.log(data);
         setElections(data); // Store the fetched data in state
       })
-      .catch((error) => console.error("Error fetching elections:", error));
+      .catch((error) => {
+        console.error("Error fetching elections:", error);
+        setErrorMessage(
+          "ইলেকশন ডেটা লোড করতে ব্যর্থ হয়েছে। পুনরায় চেষ্টা করুন।"
+        );
+      });
   }, []);
 
   // Handle voting
   const handleVote = async (postId, candidateId) => {
     try {
+      setErrorMessage(""); // Clear any previous error messages
+      setSuccessMessage(""); // Clear any previous success messages
+
       const response = await fetch(
         "https://bnp-api-9oht.onrender.com/election/vote",
         {
@@ -37,14 +46,16 @@ const Vote = () => {
       );
 
       if (response.ok) {
+        const data = await response.json();
         setSuccessMessage("আপনার ভোট সফলভাবে গৃহীত হয়েছে!");
         setVotedCandidates((prev) => [...prev, candidateId]);
       } else {
-        throw new Error("Voting failed");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Voting failed");
       }
     } catch (error) {
       console.error("Voting failed:", error);
-      alert("ভোট দিতে ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
+      setErrorMessage(`ভোট দিতে ব্যর্থ হয়েছে: ${error.message}`);
     }
   };
 
@@ -69,6 +80,11 @@ const Vote = () => {
           {/* Success Message */}
           {successMessage && (
             <p className="text-green-600 font-bold my-3">{successMessage}</p>
+          )}
+
+          {/* Error Message */}
+          {errorMessage && (
+            <p className="text-red-600 font-bold my-3">{errorMessage}</p>
           )}
 
           {/* Table */}

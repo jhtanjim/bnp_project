@@ -37,7 +37,7 @@ const DashBoard = () => {
           </div>
         </Link>
         {/* card 5 */}
-        <Link href="/vote">
+        <Link href="/elections">
           <div className="border bg-[#DCFCE7]/50 p-4 py-8 text-center">
             <AiFillLike className="text-6xl mx-auto" />
             <h1 className="text-4xl font-bold">ভোট দিন</h1>

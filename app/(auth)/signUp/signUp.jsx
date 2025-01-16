@@ -170,7 +170,7 @@ const SignUp = () => {
           nid: "",
           ward: "",
           thana: "",
-          mohanagar: "",
+          mohanagar: "Chattogram",
           electionCenter: "",
           politicalPost: "",
           image: null,
@@ -292,15 +292,17 @@ const SignUp = () => {
           <label className="block text-sm font-semibold">
             মহানগর নির্বাচন করুন
           </label>
-          <input
+
+          <select
             name="mohanagar"
             value={formData.mohanagar}
             onChange={handleChange}
-            placeholder="মহানগর নির্বাচন করুন"
-            type="text"
             className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
             required
-          />
+          >
+            <option value=""> মহানগর নির্বাচন করুন</option>
+            <option value="Chattogram">Chattogram</option>
+          </select>
         </div>
 
         {/* Party and Thana */}

@@ -85,12 +85,12 @@ const Navbar = () => {
           >
             ড্যাশবোর্ড
           </Link>
-          <Link
+          {/* <Link
             href="/userAll"
             className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             All User
-          </Link>
+          </Link> */}
         </div>
 
         {/* Right Side: Buttons and Icons */}
