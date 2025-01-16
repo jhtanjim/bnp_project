@@ -20,6 +20,7 @@ export default function ElectionDetail() {
   useEffect(() => {
     if (!id) return;
 
+    // Fetch election details
     fetch(`https://bnp-api-9oht.onrender.com/election/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -34,6 +35,10 @@ export default function ElectionDetail() {
         );
         setLoading(false);
       });
+
+    // Check for previously voted candidates from localStorage
+    const voted = JSON.parse(localStorage.getItem("votedCandidates") || "[]");
+    setVotedCandidates(voted);
   }, [id]);
 
   const handleVote = async (postId, candidateId) => {
@@ -56,7 +61,14 @@ export default function ElectionDetail() {
       if (response.ok) {
         const data = await response.json();
         setSuccessMessage("আপনার ভোট সফলভাবে গৃহীত হয়েছে!");
-        setVotedCandidates((prev) => [...prev, candidateId]);
+
+        // Save voted candidate in localStorage and state
+        const updatedVotedCandidates = [...votedCandidates, candidateId];
+        setVotedCandidates(updatedVotedCandidates);
+        localStorage.setItem(
+          "votedCandidates",
+          JSON.stringify(updatedVotedCandidates)
+        );
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Voting failed");
