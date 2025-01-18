@@ -4,11 +4,25 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 
+// Function to generate random math problem
+const generateMathProblem = () => {
+  const num1 = Math.floor(Math.random() * 10) + 1;
+  const num2 = Math.floor(Math.random() * 10) + 1;
+  const operator = Math.random() > 0.5 ? "+" : "*";
+  n
+
+  let question = `${num1} ${operator} ${num2}`;
+  let solution = operator === "+" ? num1 + num2 : num1 * num2;
+
+  return { question, solution };
+};
+
 const SignUp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
-
+  const [capVal, setCapVal] = useState("");
+  const [mathProblem, setMathProblem] = useState({});
   const [mohanagars, setMohanagars] = useState([]);
   const [thanas, setThanas] = useState([]);
   const [wards, setWards] = useState([]);
@@ -59,6 +73,9 @@ const SignUp = () => {
       }
     };
     fetchLocationData();
+
+    // Generate math problem for captcha
+    setMathProblem(generateMathProblem());
   }, []);
 
   // Filter wards based on selected thana
@@ -98,6 +115,12 @@ const SignUp = () => {
     // Validate password match
     if (formData.password !== formData.confirmPassword) {
       alert("পাসওয়ার্ড মিলছে না!");
+      return;
+    }
+
+    // Validate CAPTCHA answer
+    if (parseInt(capVal) !== mathProblem.solution) {
+      alert("CAPTCHA সঠিক নয়!");
       return;
     }
 
@@ -390,8 +413,26 @@ const SignUp = () => {
           />
         </div>
 
+        {/* CAPTCHA */}
+        <div className="mb-4">
+          <label className="block text-sm font-semibold">
+            CAPTCHA: {mathProblem.question}
+          </label>
+          <input
+            type="number"
+            value={capVal}
+            onChange={(e) => setCapVal(e.target.value)}
+            placeholder="Answer"
+            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            required
+          />
+        </div>
+
+        {/* Other form fields... */}
+
         <div className="mt-6">
           <button
+            disabled={!capVal}
             type="submit"
             className="w-full bg-blue-500 text-white py-3 px-5 rounded-lg hover:bg-blue-600"
           >
