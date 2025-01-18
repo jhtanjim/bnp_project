@@ -1,186 +1,150 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-const thanas = [
-  { code: "AK", name: "Akbarshah Thana", wards: ["10"] },
-  { code: "BA", name: "Bakoliya Thana", wards: ["17", "18", "19", "35"] },
-  { code: "BD", name: "Bandar Thana", wards: ["36", "37", "38", "39"] },
-  { code: "BY", name: "Bayazid Thana", wards: ["02"] },
-  { code: "CH", name: "Chandgaon Thana", wards: ["04", "05", "06"] },
-  { code: "CB", name: "Chawkbazar Thana", wards: ["15", "16"] },
-  {
-    code: "DM",
-    name: "Double Mooring Thana",
-    wards: ["12", "23", "24", "27", "28", "29", "30"],
-  },
-  { code: "EP", name: "EPZ Thana", wards: ["39", "40", "41"] },
-  { code: "HA", name: "Halishahar Thana", wards: ["11", "24", "25", "26"] },
-  { code: "KH", name: "Khulshi Thana", wards: ["08", "09", "13", "14"] },
-  {
-    code: "KT",
-    name: "Kotwali Thana",
-    wards: ["20", "21", "22", "30", "31", "32", "33", "34", "35", "15", "16"],
-  },
-  { code: "PA", name: "Pahartali Thana", wards: ["09", "11", "12"] },
-  {
-    code: "PC",
-    name: "Panchlaish Thana",
-    wards: ["01", "02", "03", "07", "08", "15", "16"],
-  },
-  { code: "PT", name: "Patenga Thana", wards: ["39", "40", "41"] },
-  { code: "SD", name: "Sadarghat Thana", wards: ["30", "35"] },
-];
+import { useAuth } from "@/contexts/AuthContext";
+import Image from "next/image";
 
 const SignUp = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+  const { login } = useAuth();
+
+  const [mohanagars, setMohanagars] = useState([]);
+  const [thanas, setThanas] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [selectedMohanagar, setSelectedMohanagar] = useState("");
+  const [selectedThana, setSelectedThana] = useState("");
+  const [filteredWards, setFilteredWards] = useState([]);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    mobile: "",
     password: "",
     confirmPassword: "",
-    mobileNumber: "",
-    nid: "",
-    ward: "",
-    thana: "",
-    mohanagar: "",
-    electionCenter: "",
-    politicalPost: "",
+    country: "",
     image: null,
+    mohanagarCode: "",
+    thanaCode: "",
+    wardCode: "",
+    electionCenter: "",
+    userType: "",
+    nid: "",
   });
 
-  const [wards, setWards] = useState([]); // State to store the wards of selected thana
+  const usertypes = [
+    { name: "BNP", value: "BNP" },
+    { name: "CHATRODOL", value: "CHATRODOL" },
+    { name: "JUBODOL", value: "JUBODOL" },
+  ];
 
-  // Handle input change
+  // Fetching data
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const mohanagarsData = await fetch(
+          "https://bnp-api-9oht.onrender.com/location/mohanagar"
+        ).then((res) => res.json());
+        const thanasData = await fetch(
+          "https://bnp-api-9oht.onrender.com/location/thana"
+        ).then((res) => res.json());
+        const wardsData = await fetch(
+          "https://bnp-api-9oht.onrender.com/location/ward"
+        ).then((res) => res.json());
+
+        setMohanagars(mohanagarsData);
+        setThanas(thanasData);
+        setWards(wardsData);
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+      }
+    };
+    fetchLocationData();
+  }, []);
+
+  // Filter wards based on selected thana
+  useEffect(() => {
+    const filtered = wards.filter((ward) => ward.thanaId === selectedThana);
+    setFilteredWards(filtered);
+  }, [selectedThana, wards]);
+
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  // Handle thana selection and update wards
-  const handleThanaChange = (e) => {
-    const selectedThanaCode = e.target.value;
-    const selectedThana = thanas.find(
-      (thana) => thana.code === selectedThanaCode
-    );
-    setFormData({ ...formData, thana: selectedThanaCode, ward: "" });
-    setWards(selectedThana ? selectedThana.wards : []);
-  };
-
-  // Handle file upload
+  // Handle file upload for image
   const handleFileUpload = (e) => {
-    const { name, files } = e.target;
-    setFormData({ ...formData, [name]: files[0] });
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      image: file,
+    });
   };
 
-  // Handle form submission
+  // Handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // mohanagar code
-    if (!formData.mohanagar || formData.mohanagar === "") {
-      alert("মহানগর নির্বাচন করুন!");
+
+    // Validation for NID
+    if (!formData.nid) {
+      alert("NID বাধ্যতামূলক।");
       return;
     }
-    // Validation checks
+
+    // Validate password match
     if (formData.password !== formData.confirmPassword) {
       alert("পাসওয়ার্ড মিলছে না!");
       return;
     }
 
-    if (!formData.electionCenter) {
-      alert("নির্বাচনী কেন্দ্র নির্বাচন করুন!");
-      return;
-    }
-
-    // Validate userType (party)
-    const validUserTypes = ["BNP", "CHATRODOL", "JUBODOL"];
-    if (!validUserTypes.includes(formData.party)) {
-      alert("বিএনপি, ছাত্রদল বা যুবদল নির্বাচন করুন!");
-      return;
-    }
-
-    // Validate mohanagarCode (mohanagar should be a string and not empty)
-    if (!formData.mohanagar || typeof formData.mohanagar !== "string") {
-      alert("মহানগর নির্বাচন করুন!");
-      return;
-    }
-
-    // Validate thanaCode (thana should be a string and not empty)
-    if (!formData.thana || typeof formData.thana !== "string") {
-      alert("থানা নির্বাচন করুন!");
-      return;
-    }
-
-    // Validate wardCode (ward should be a string and not empty)
-    if (!formData.ward || typeof formData.ward !== "string") {
-      alert("ওয়ার্ড নির্বাচন করুন!");
-      return;
-    }
+    // Prepare form data to send
+    const data = new FormData();
+    data.append("fullName", formData.fullName);
+    data.append("email", formData.email);
+    data.append("mobile", formData.mobile);
+    data.append("password", formData.password);
+    data.append("country", formData.country);
+    data.append("mohanagarCode", formData.mohanagarCode);
+    data.append("thanaCode", formData.thanaCode);
+    data.append("wardCode", formData.wardCode);
+    data.append("electionCenter", formData.electionCenter);
+    data.append("userType", formData.userType);
+    data.append("nid", formData.nid); // Add NID
+    data.append("image", formData.image);
 
     try {
-      // Construct FormData for API submission
-      const submissionData = new FormData();
-      submissionData.append("email", formData.email);
-      submissionData.append("password", formData.password);
-      submissionData.append("fullName", formData.fullName);
-      submissionData.append("nid", formData.nid);
-      submissionData.append("country", "Bangladesh");
-      submissionData.append("mobile", formData.mobileNumber);
-      submissionData.append("mohanagar", formData.mohanagar);
-      submissionData.append("thanaCode", formData.thana);
-      submissionData.append("wardCode", formData.ward);
-      submissionData.append("electionCenter", formData.electionCenter);
-      submissionData.append("userType", formData.party);
-      if (formData.image) {
-        submissionData.append("image", formData.image);
-      }
-
-      // API call to submit the form data
       const response = await fetch(
         "https://bnp-api-9oht.onrender.com/auth/signup",
         {
           method: "POST",
-          body: submissionData,
+          body: data,
         }
       );
 
-      const result = await response.json();
-      console.log(result);
       if (response.ok) {
+        const result = await response.json();
         alert("সাইন আপ সফল হয়েছে!");
-        setIsLoggedIn(true);
 
         // Store user data in localStorage
         localStorage.setItem("userData", JSON.stringify(result.user));
 
+        // Use login context to set the user state
+        login(result.token, result.user);
+
         // Redirect after successful signup
         router.push("/");
 
-        // Reset form
-        setFormData({
-          fullName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          mobileNumber: "",
-          nid: "",
-          ward: "",
-          thana: "",
-          mohanagar: "Chattogram",
-          electionCenter: "",
-          politicalPost: "",
-          image: null,
-        });
+        console.log("Form submitted successfully:", result);
       } else {
-        alert(result.message || "সাইন আপ ব্যর্থ হয়েছে!");
+        const errorText = await response.text();
+        console.error("Error submitting form:", response.status, errorText);
       }
     } catch (error) {
-      console.error("Error during signup:", error);
-      alert("সাইন আপের সময় ত্রুটি ঘটেছে। পরে আবার চেষ্টা করুন।");
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -196,7 +160,6 @@ const SignUp = () => {
         />
         <h1 className="font-bold text-xl">চট্টগ্রাম মহানগর বিএনপি</h1>
       </div>
-
       <form className="max-w-xl mx-auto my-4" onSubmit={handleSubmit}>
         {/* Full Name and Email */}
         <div className="lg:flex gap-4">
@@ -224,6 +187,22 @@ const SignUp = () => {
               required
             />
           </div>
+        </div>
+
+        {/* Country */}
+        <div>
+          <label htmlFor="country" className="mb-3 block">
+            দেশ
+          </label>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            placeholder="দেশ লিখুন"
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
+          />
         </div>
 
         {/* Passwords */}
@@ -263,10 +242,10 @@ const SignUp = () => {
               মোবাইল নাম্বার
             </label>
             <input
-              name="mobileNumber"
-              value={formData.mobileNumber}
+              name="mobile"
+              value={formData.mobile}
               onChange={handleChange}
-              placeholder="০১৭xxxxxxxx"
+              placeholder="মোবাইল নম্বর লিখুন"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
@@ -280,7 +259,7 @@ const SignUp = () => {
               name="nid"
               value={formData.nid}
               onChange={handleChange}
-              placeholder="এনআইডি নাম্বার"
+              placeholder="এনআইডি নাম্বার লিখুন"
               type="text"
               className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
               required
@@ -288,117 +267,133 @@ const SignUp = () => {
           </div>
         </div>
 
-        <div className="mb-4 w-full">
-          <label className="block text-sm font-semibold">
-            মহানগর নির্বাচন করুন
+        {/* User Type */}
+        <div>
+          <label htmlFor="userType" className="mb-3 block">
+            পদবি
           </label>
-
           <select
-            name="mohanagar"
-            value={formData.mohanagar}
+            id="userType"
+            name="userType"
+            value={formData.userType}
             onChange={handleChange}
-            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            required
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
           >
-            <option value=""> মহানগর নির্বাচন করুন</option>
-            <option value="Chattogram">Chattogram</option>
+            <option value="">পদবি নির্বাচন করুন</option>
+            {usertypes.map((type) => (
+              <option key={type.value} value={type.value}>
+                {type.name}
+              </option>
+            ))}
           </select>
         </div>
 
-        {/* Party and Thana */}
-        <div className="lg:flex gap-4">
-          <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">পদবি</label>
-            <select
-              name="party"
-              value={formData.party}
-              onChange={handleChange}
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-              required
-            >
-              <option value="">পদবি নির্বাচন করুন</option>
-              <option value="BNP">বিএনপি</option>
-              <option value="CHATRODOL">ছাত্রদল</option>
-              <option value="JUBODOL">যুবদল</option>
-            </select>
-          </div>
+        {/* Location Fields (Mohanagar, Thana, Ward, Election Center) */}
+        <div>
+          <label htmlFor="mohanagarCode" className="mb-3 block">
+            মহানগর
+          </label>
+          <select
+            name="mohanagarCode"
+            value={formData.mohanagarCode}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                mohanagarCode: e.target.value,
+              });
+              setSelectedMohanagar(e.target.value);
+            }}
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
+          >
+            <option value="">মহানগর নির্বাচন করুন</option>
+            {mohanagars.map((mohanagar) => (
+              <option key={mohanagar.id} value={mohanagar.id}>
+                {mohanagar.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          {/* Select Thana */}
-          <div className="mb-4 w-full">
-            <label className="block text-sm font-semibold">
-              থানা নির্বাচন করুন
-            </label>
-            <select
-              name="thana"
-              value={formData.thana}
-              onChange={handleThanaChange}
-              className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-              required
-            >
-              <option value="">থানা নির্বাচন করুন</option>
-              {thanas.map((thana) => (
-                <option key={thana.code} value={thana.code}>
-                  {thana.name}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Select Thana */}
+        <div>
+          <label htmlFor="thanaCode" className="mb-3 block">
+            থানা নির্বাচন করুন
+          </label>
+          <select
+            name="thanaCode"
+            value={formData.thanaCode}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                thanaCode: e.target.value,
+              });
+              setSelectedThana(e.target.value);
+            }}
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
+          >
+            <option value="">থানা নির্বাচন করুন</option>
+            {thanas.map((thana) => (
+              <option key={thana.id} value={thana.id}>
+                {thana.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Select Ward */}
-        <div className="mb-4 w-full">
-          <label className="block text-sm font-semibold">
-            ওয়ার্ড নির্বাচন করুন
+        <div>
+          <label htmlFor="wardCode" className="mb-3 block">
+            ওয়ার্ড নির্বাচন করুন
           </label>
           <select
-            name="ward"
-            value={formData.ward}
+            name="wardCode"
+            value={formData.wardCode}
             onChange={handleChange}
-            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            required
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
           >
-            <option value="">ওয়ার্ড নির্বাচন করুন</option>
-            {wards.map((ward) => (
-              <option key={ward} value={ward}>
-                {ward}
+            <option value="">ওয়ার্ড নির্বাচন করুন</option>
+            {filteredWards.map((ward) => (
+              <option key={ward.id} value={ward.id}>
+                {ward.name}
               </option>
             ))}
           </select>
         </div>
 
         {/* Election Center */}
-        <div className="mb-4 w-full">
-          <label className="block text-sm font-semibold">
+        <div>
+          <label htmlFor="electionCenter" className="mb-3 block">
             নির্বাচনী কেন্দ্র
           </label>
           <input
+            type="text"
+            id="electionCenter"
             name="electionCenter"
             value={formData.electionCenter}
             onChange={handleChange}
-            placeholder="নির্বাচনী কেন্দ্র"
-            type="text"
-            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
-            required
+            placeholder="কেন্দ্র নাম লিখুন"
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
           />
         </div>
 
         {/* Image Upload */}
-        <div className="mb-4 w-full">
-          <label className="block text-sm font-semibold">প্রোফাইল ছবি</label>
+        <div>
+          <label htmlFor="image" className="mb-3 block">
+            ছবি আপলোড করুন
+          </label>
           <input
-            name="image"
             type="file"
-            accept="image/*"
+            id="image"
+            name="image"
             onChange={handleFileUpload}
-            className="border shadow-lg rounded-2xl w-full px-4 py-3 mt-2"
+            className="w-full rounded-lg border-[1.5px] border-stroke py-3 px-5"
           />
         </div>
 
-        {/* Submit Button */}
         <div className="mt-6">
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-blue-600 text-white text-lg font-bold rounded-2xl"
+            className="w-full bg-blue-500 text-white py-3 px-5 rounded-lg hover:bg-blue-600"
           >
             সাইন আপ করুন
           </button>
