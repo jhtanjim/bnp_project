@@ -106,10 +106,10 @@ const Home = () => {
 
       <div className="max-w-screen-2xl lg:mx-auto mx-4">
         <div className="lg:flex gap-4">
-          <div className="w-[30%] my-auto">
+          <div className="lg:w-[30%] my-auto">
             <BnpDofa />
           </div>
-          <div className="w-[70%] ">
+          <div className="lg:w-[70%] ">
             <SignIn className="" />
             <div className="mt-[-60px]">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
