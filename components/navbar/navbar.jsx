@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { FaFacebook, FaInstagram, FaBars, FaTimes } from "react-icons/fa";
+import PrivateRoute from "../privateRoute/privateRoute ";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -79,12 +80,15 @@ const Navbar = () => {
           >
             রিসোর্স
           </Link>
-          <Link
-            href="/dashBoard"
-            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
-          >
-            ড্যাশবোর্ড
-          </Link>
+          <PrivateRoute>
+            <Link
+              href="/dashBoard"
+              className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+            >
+              ড্যাশবোর্ড
+            </Link>
+          </PrivateRoute>
+
           {/* <Link
             href="/userAll"
             className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
