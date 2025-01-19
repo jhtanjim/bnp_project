@@ -7,7 +7,7 @@ import UpdateProfile from "../updateProfile/updateProfile";
 const MyProfile = () => {
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-
+  console.log(user);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -30,7 +30,7 @@ const MyProfile = () => {
     if (user) {
       setProfileData({
         name: user.fullName,
-        id: user.userId,
+        id: user.id,
         email: user.email,
         phone: user.mobile,
         nid: user.nid,

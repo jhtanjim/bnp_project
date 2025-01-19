@@ -8,8 +8,7 @@ import Image from "next/image";
 const generateMathProblem = () => {
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
-  const operator = Math.random() > 0.5 ? "+" : "*";
-  n
+  const operator = Math.random() > 0.5 ? "+" : "*"; // Addition or Multiplication
 
   let question = `${num1} ${operator} ${num2}`;
   let solution = operator === "+" ? num1 + num2 : num1 * num2;

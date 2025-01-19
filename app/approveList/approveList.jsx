@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 const ApproveList = () => {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [approvingUserId, setApprovingUserId] = useState(null);
   const usersPerPage = 10;
 
   useEffect(() => {
@@ -20,7 +22,8 @@ const ApproveList = () => {
         throw new Error("Failed to fetch users");
       }
       const data = await response.json();
-      const unverifiedUsers = data.users.filter((user) => !user.isVerified);
+      const unverifiedUsers =
+        data.users?.filter((user) => !user.isVerified) || [];
       setUsers(unverifiedUsers);
       setError(null);
     } catch (error) {
@@ -32,9 +35,10 @@ const ApproveList = () => {
   };
 
   const approveUser = async (userId) => {
+    setApprovingUserId(userId);
     try {
       const response = await fetch(
-        `https://bnp-api-9oht.onrender.com/user/${userId}`, // Corrected to userId
+        `https://bnp-api-9oht.onrender.com/user/${userId}`,
         {
           method: "PATCH",
           headers: {
@@ -44,18 +48,24 @@ const ApproveList = () => {
         }
       );
 
-      console.log("Response Status:", response.status); // Log the response status
-      console.log("Response Body:", await response.text()); // Log the response body
-
       if (!response.ok) {
-        throw new Error("Failed to approve user");
+        const responseBody = await response.text();
+        console.error("Server response:", responseBody);
+        throw new Error(`Failed to approve user. Status: ${response.status}`);
       }
 
-      // Update the local state to remove the approved user
+      const updatedUser = await response.json();
+
+      // Optimistically update the UI
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      toast.success(
+        `User ${updatedUser.fullName || userId} approved successfully`
+      );
     } catch (error) {
-      console.error("Error approving user:", error);
-      alert("Failed to approve user. Please try again.");
+      console.error("Error approving user:", error.message);
+      toast.error(`Failed to approve user: ${error.message}`);
+    } finally {
+      setApprovingUserId(null);
     }
   };
 
@@ -98,17 +108,24 @@ const ApproveList = () => {
               <tbody className="border bg-green-50 text-center">
                 {currentUsers.map((user) => (
                   <tr key={user.id}>
-                    <td className="border p-2">{user.fullName}</td>
-                    <td className="border p-2">{user.email}</td>
-                    <td className="border p-2">{user.mobile}</td>
-                    <td className="border p-2">{user.nid}</td>
+                    <td className="border p-2">{user.fullName || "N/A"}</td>
+                    <td className="border p-2">{user.email || "N/A"}</td>
+                    <td className="border p-2">{user.mobile || "N/A"}</td>
+                    <td className="border p-2">{user.nid || "N/A"}</td>
                     <td className="border p-2">
                       <div className="flex justify-center gap-2">
                         <button
                           onClick={() => approveUser(user.id)}
-                          className="px-4 py-1 text-sm bg-green-500 hover:bg-green-600 text-white rounded"
+                          className={`px-4 py-1 text-sm rounded ${
+                            approvingUserId === user.id
+                              ? "bg-gray-400"
+                              : "bg-green-500 hover:bg-green-600 text-white"
+                          }`}
+                          disabled={approvingUserId === user.id}
                         >
-                          অনুমোদন
+                          {approvingUserId === user.id
+                            ? "Approving..."
+                            : "অনুমোদন"}
                         </button>
                         <button className="px-4 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded">
                           বাতিল

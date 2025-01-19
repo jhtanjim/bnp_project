@@ -1,11 +1,16 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [allUserData, setAllUserData] = useState();
+
+  const userId = user?.id;
+
+  const userInformation = allUserData?.find((user) => user.userId === userId);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -14,6 +19,7 @@ export function AuthProvider({ children }) {
       setIsAuthenticated(true);
       setUser(JSON.parse(savedUser));
     }
+    allUsers();
   }, []);
 
   const login = (token, userData) => {
@@ -30,8 +36,16 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  const allUsers = () => {
+    fetch("https://bnp-api-9oht.onrender.com/user")
+      .then((res) => res.json())
+      .then((data) => setAllUserData(data.users));
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, login, logout, userInformation }}
+    >
       {children}
     </AuthContext.Provider>
   );
