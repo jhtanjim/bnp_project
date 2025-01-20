@@ -1,9 +1,8 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export default function ElectionDetail() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

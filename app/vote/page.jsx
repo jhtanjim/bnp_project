@@ -1,12 +1,12 @@
-import React from "react";
-import Vote from "./vote";
+// import React from "react";
+// import Vote from "./vote";
 
-const page = () => {
-  return (
-    <div>
-      <Vote />
-    </div>
-  );
-};
+// const page = () => {
+//   return (
+//     <div>
+//       <Vote />
+//     </div>
+//   );
+// };
 
-export default page;
+// export default page;
