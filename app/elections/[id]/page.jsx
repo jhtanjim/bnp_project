@@ -15,7 +15,7 @@ export default function ElectionDetail() {
   const [successMessage, setSuccessMessage] = useState("");
   const [votedCandidates, setVotedCandidates] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
+  console.log(votedCandidates);
   const params = useParams();
   const id = params.id;
 
@@ -42,8 +42,8 @@ export default function ElectionDetail() {
       });
 
     // Check for previously voted candidates from localStorage
-    const voted = JSON.parse(localStorage.getItem("votedCandidates") || "[]");
-    setVotedCandidates(voted);
+    // const voted = JSON.parse(localStorage.getItem("votedCandidates") || "[]");
+    // setVotedCandidates(voted);
   }, [id]);
 
   const handleVote = async (postId, candidateId) => {

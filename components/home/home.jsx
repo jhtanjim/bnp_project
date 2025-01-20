@@ -10,6 +10,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styl
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState(""); // Manage search input
+  const [searchResults, setSearchResults] = useState([]); // Manage search results
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -18,6 +20,21 @@ const Home = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleSearch = async () => {
+    if (searchInput.trim() === "") return;
+    try {
+      const response = await fetch(
+        `https://bnp-api-9oht.onrender.com/user/?partyId=${searchInput}`
+      );
+      const data = await response.json();
+      setSearchResults(data.users); // Assuming `users` is an array in the response
+      openModal();
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
+
   return (
     <div>
       {/* ব্যানার */}
@@ -40,38 +57,8 @@ const Home = () => {
               priority
             />
           </div>
-          <div>
-            <Image
-              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
-              alt="খালেদা জিয়া"
-              className="w-full lg:h-[650px] object-cover"
-              width={1200}
-              height={650}
-              priority
-            />
-          </div>
         </Carousel>
       </div>
-      {/* search */}
-      {/* Modal */}
-      {isModalOpen && (
-        <div className=" z-[1000] fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">আপনার অনুসন্ধান ফলাফল</h3>
-            <p className="text-gray-700 mb-4">
-              এখানে আপনার অনুসন্ধান ফলাফল দেখানো হবে।
-            </p>
-            <div className="flex justify-end gap-4">
-              <button
-                className="px-4 py-2 border rounded-lg"
-                onClick={closeModal}
-              >
-                বন্ধ করুন
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Search bar */}
       <div className="max-w-screen-xl lg:mx-auto mx-4">
@@ -87,6 +74,8 @@ const Home = () => {
               id="search"
               placeholder="সদস্য খুঁজুন"
               type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               className="border-2 border-green-500 shadow-xl rounded-2xl w-full px-6 py-4 text-lg focus:outline-none focus:ring-2 focus:ring-green-600"
               required
             />
@@ -94,13 +83,83 @@ const Home = () => {
           <div className="my-auto mt-10 lg:w-[10%]">
             <button
               className="bg-green-600 text-white p-4 rounded-full hover:bg-red-700 transition duration-300 hover:text-yellow-500"
-              onClick={openModal}
+              onClick={handleSearch}
             >
               <FaSearch size={20} />
             </button>
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="z-[1000] fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl p-8 w-full max-w-4xl shadow-2xl">
+            <h3 className="text-2xl font-bold mb-6 text-center text-green-600">
+              অনুসন্ধানের ফলাফল
+            </h3>
+            {searchResults.length > 0 ? (
+              <div className="space-y-8">
+                {searchResults.map((user) => (
+                  <div
+                    key={user.id}
+                    className="flex flex-col md:flex-row items-center bg-gray-100 rounded-lg p-6 shadow-md"
+                  >
+                    {/* Profile Image */}
+                    <img
+                      src={user.image}
+                      alt={user.fullName}
+                      className="w-32 h-32 rounded-full object-cover mb-4 md:mb-0 md:mr-6"
+                    />
+                    {/* User Details */}
+                    <div className="text-center md:text-left">
+                      <p className="text-lg font-semibold">
+                        <strong>নাম:</strong> {user.fullName}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>ইমেইল:</strong> {user.email}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>মোবাইল:</strong> {user.mobile}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>NID:</strong> {user.nid}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>ইউজার আইডি:</strong> {user.userId}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>ইলেকশন সেন্টার:</strong> {user.electionCenter}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>মহানগর:</strong> {user.mohanagar}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>থানা:</strong> {user.thana}
+                      </p>
+                      <p className="text-gray-700">
+                        <strong>ওয়ার্ড:</strong> {user.ward}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-700 text-center mb-6">
+                কোনও ফলাফল পাওয়া যায়নি।
+              </p>
+            )}
+            <div className="flex justify-center mt-6">
+              <button
+                className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                onClick={closeModal}
+              >
+                বন্ধ করুন
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* নেতা বিভাগ */}
 

@@ -1,14 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import React, { useEffect, useState } from "react";
 
 const ApproveList = () => {
   const [users, setUsers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [approvingUserId, setApprovingUserId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
+
+  const userToken = localStorage.getItem("token");
+  // console.log(userToken);
+  // Calculate total pages based on fetched data length and usersPerPage
+  const totalPages = Math.ceil(users.length / usersPerPage);
 
   useEffect(() => {
     fetchUsers();
@@ -16,21 +18,18 @@ const ApproveList = () => {
 
   const fetchUsers = async () => {
     try {
-      setIsLoading(true);
       const response = await fetch("https://bnp-api-9oht.onrender.com/user");
-      if (!response.ok) {
-        throw new Error("Failed to fetch users");
-      }
       const data = await response.json();
-      const unverifiedUsers =
-        data.users?.filter((user) => !user.isVerified) || [];
-      setUsers(unverifiedUsers);
-      setError(null);
+      if (response.ok) {
+        const unverifiedUsers = data.users.filter(
+          (user) => user.isVerified === false
+        );
+        setUsers(unverifiedUsers);
+      } else {
+        console.error("Failed to fetch users");
+      }
     } catch (error) {
-      setError("Error fetching users. Please try again later.");
       console.error("Error fetching users:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -38,52 +37,44 @@ const ApproveList = () => {
     setApprovingUserId(userId);
     try {
       const response = await fetch(
-        `https://bnp-api-9oht.onrender.com/user/${userId}`,
+        `https://bnp-api-9oht.onrender.com/user/${userId}/verify`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
           },
           body: JSON.stringify({ isVerified: true }),
         }
       );
 
-      if (!response.ok) {
-        const responseBody = await response.text();
-        console.error("Server response:", responseBody);
-        throw new Error(`Failed to approve user. Status: ${response.status}`);
+      // Log response for debugging
+      console.log("Response status:", response.status);
+      const responseBody = await response.json();
+      console.log("Response body:", responseBody);
+
+      if (response.ok) {
+        // Update the local state to reflect the change
+        setUsers(users.filter((user) => user.id !== userId));
+      } else {
+        console.error("Failed to approve user:", responseBody);
       }
-
-      const updatedUser = await response.json();
-
-      // Optimistically update the UI
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-      toast.success(
-        `User ${updatedUser.fullName || userId} approved successfully`
-      );
     } catch (error) {
-      console.error("Error approving user:", error.message);
-      toast.error(`Failed to approve user: ${error.message}`);
+      console.error("Error approving user:", error);
     } finally {
       setApprovingUserId(null);
     }
   };
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-  const totalPages = Math.ceil(users.length / usersPerPage);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  if (isLoading) {
-    return <div className="text-center mt-8">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center mt-8 text-red-500">{error}</div>;
-  }
+  // Pagination: slice users to show only the current page's users
+  const currentUsers = users.slice(
+    (currentPage - 1) * usersPerPage,
+    currentPage * usersPerPage
+  );
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 my-24">
