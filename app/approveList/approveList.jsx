@@ -6,14 +6,16 @@ const ApproveList = () => {
   const [approvingUserId, setApprovingUserId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
-
-  const userToken = localStorage.getItem("token");
+  const [userToken, setUserToken] = useState();
+  // const userToken = localStorage.getItem("token");
   // console.log(userToken);
   // Calculate total pages based on fetched data length and usersPerPage
   const totalPages = Math.ceil(users.length / usersPerPage);
 
   useEffect(() => {
     fetchUsers();
+    const userToken = localStorage.getItem("token");
+    setUserToken(userToken);
   }, []);
 
   const fetchUsers = async () => {
