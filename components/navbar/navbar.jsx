@@ -2,13 +2,23 @@
 import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaFacebook, FaInstagram, FaBars, FaTimes } from "react-icons/fa";
-import PrivateRoute from "../privateRoute/privateRoute ";
+// import PrivateRoute from "../privateRoute/privateRoute";
+import { useUserData } from "@/app/hooks/useUserData";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
+  const { userData } = useUserData();
+  const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
+
+  useEffect(() => {
+    // Wait until the user data is fetched before rendering
+    if (userData) {
+      setIsUserDataLoaded(true);
+    }
+  }, [userData]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -20,14 +30,13 @@ const Navbar = () => {
         {/* Logo Section */}
         <Link href="/">
           <div className="flex lg:block">
-            {" "}
-            <div className=" flex justify-center">
+            <div className="flex justify-center">
               <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Bangladesh_Nationalist_Party.svg"
                 alt="Logo"
                 width={40}
                 height={40}
-                className="h-16 lg:w-24 w-16 "
+                className="h-16 lg:w-24 w-16"
               />
             </div>
             <span className="ml-2 lg:text-lg font-bold text-green-800 my-auto">
@@ -80,46 +89,44 @@ const Navbar = () => {
           >
             রিসোর্স
           </Link>
-          <PrivateRoute>
-            <Link
-              href="/dashBoard"
-              className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
-            >
-              ড্যাশবোর্ড
-            </Link>
-          </PrivateRoute>
-
-          {/* <Link
-            href="/userAll"
+          {/* <PrivateRoute> */}
+          <Link
+            href="/dashBoard"
             className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
-            All User
-          </Link> */}
+            ড্যাশবোর্ড
+          </Link>
+          {/* </PrivateRoute> */}
         </div>
 
         {/* Right Side: Buttons and Icons */}
         <div className="hidden md:flex items-center space-x-4">
-          {isAuthenticated ? (
-            <button
-              onClick={logout}
-              className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
-            >
-              <span className="mr-2">LOGOUT</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          {isAuthenticated && isUserDataLoaded ? (
+            <>
+              <span className="text-green-800 font-medium">
+                {userData.fullName}
+              </span>
+              <button
+                onClick={logout}
+                className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 12h14M12 5l7 7-7 7"
-                />
-              </svg>
-            </button>
+                <span className="mr-2">LOGOUT</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 12h14M12 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </>
           ) : (
             <Link
               href="/signIn"

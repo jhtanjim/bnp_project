@@ -10,9 +10,20 @@ export default function Elections() {
 
   useEffect(() => {
     // Fetch all election data
-    fetch("https://bnp-api-9oht.onrender.com/election/summary")
-      .then((res) => res.json())
+    fetch("https://bnp-api-9oht.onrender.com/election/summary", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        return res.json();
+      })
       .then((data) => {
+        console.log(data);
         setElections(data); // Store the fetched elections data
         setLoading(false); // Stop the loading indicator
       })
