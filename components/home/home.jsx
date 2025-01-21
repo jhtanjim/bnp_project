@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/contexts/AuthContext"; // Assuming you have the AuthContext
 import SignIn from "@/app/(auth)/signIn/signIn";
 import { BnpDofa } from "@/app/bnpDofa/bnpDofa";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Carousel styles
 
 const Home = () => {
+  const { isAuthenticated } = useAuth(); // Get the authentication status
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(""); // Manage search input
   const [searchResults, setSearchResults] = useState([]); // Manage search results
@@ -34,7 +36,6 @@ const Home = () => {
       console.error("Error fetching search results:", error);
     }
   };
-
   return (
     <div>
       {/* ব্যানার */}
@@ -189,7 +190,12 @@ const Home = () => {
             <BnpDofa />
           </div>
           <div className="lg:w-[70%] ">
-            <SignIn className="" />
+            {!isAuthenticated && (
+              <div className="lg:w-[70%]">
+                <SignIn className="" />
+              </div>
+            )}
+
             <div className="mt-[-60px]">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <div className="rounded-lg overflow-hidden shadow-lg">
