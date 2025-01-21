@@ -120,9 +120,9 @@ const ApproveList = () => {
                             ? "Approving..."
                             : "অনুমোদন"}
                         </button>
-                        <button className="px-4 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded">
+                        {/* <button className="px-4 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded">
                           বাতিল
-                        </button>
+                        </button> */}
                       </div>
                     </td>
                   </tr>
