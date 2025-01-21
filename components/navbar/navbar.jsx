@@ -1,4 +1,5 @@
 "use client";
+
 import { useAuth } from "@/contexts/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +15,6 @@ const Navbar = () => {
   const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
 
   useEffect(() => {
-    // Wait until the user data is fetched before rendering
     if (userData) {
       setIsUserDataLoaded(true);
     }
@@ -56,50 +56,66 @@ const Navbar = () => {
         {/* Navigation Links */}
         <div
           className={`${
-            menuOpen ? "block" : "hidden"
-          } md:flex items-center space-x-6 absolute md:static top-16 left-0 w-full md:w-auto bg-green-100 md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none z-10`}
+            menuOpen ? "flex" : "hidden"
+          } md:flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 absolute md:static top-16 left-0 w-full md:w-auto bg-green-100 md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none z-10`}
         >
           <Link
             href="/"
-            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+            className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             হোম
           </Link>
           <Link
             href="#"
-            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+            className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             আমাদের সম্পর্কে
           </Link>
           <Link
             href="/video"
-            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+            className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             ভিডিও
           </Link>
           <Link
             href="/noticeBoard"
-            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+            className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             নোটিশ
           </Link>
           <Link
             href="#"
-            className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+            className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
           >
             রিসোর্স
           </Link>
           <PrivateRoute>
             <Link
               href="/dashBoard"
-              className="block md:inline text-green-800 hover:text-green-900 font-medium transition duration-200"
+              className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
             >
               ড্যাশবোর্ড
             </Link>
           </PrivateRoute>
+          {isAuthenticated && isUserDataLoaded && (
+            <button
+              onClick={logout}
+              className="block w-full md:w-auto text-left text-green-800 hover:text-green-900 font-medium transition duration-200"
+            >
+              লগআউট
+            </button>
+          )}
+          {!isAuthenticated && (
+            <Link
+              href="/signIn"
+              className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
+            >
+              সাইন ইন
+            </Link>
+          )}
         </div>
 
-        {/* Right Side: Buttons and Icons */}
+        {/* Desktop Sign-In/Logout Button */}
         <div className="hidden md:flex items-center space-x-4">
           {isAuthenticated && isUserDataLoaded ? (
             <>
@@ -133,33 +149,6 @@ const Navbar = () => {
               className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
             >
               <span className="mr-2">সাইন ইন</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 12h14M12 5l7 7-7 7"
-                />
-              </svg>
-            </Link>
-          )}
-        </div>
-
-        {/* Mobile Sign-In Button */}
-        <div className="md:hidden flex items-center space-x-4">
-          {!isAuthenticated && !menuOpen && (
-            <Link
-              href="/signIn"
-              className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium lg:px-4 lg:py-2 rounded-md transition duration-200"
-            >
-              <span className="mr-2 hidden lg:block">সাইন ইন</span>
-              <span></span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-4 w-4"

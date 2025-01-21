@@ -186,17 +186,17 @@ const Home = () => {
 
       <div className="max-w-screen-2xl lg:mx-auto mx-4">
         <div className="lg:flex gap-4">
-          <div className="lg:w-[30%] my-auto">
+          <div className="lg:w-[50%] my-auto">
             <BnpDofa />
           </div>
-          <div className="lg:w-[70%] ">
+          <div className="lg:w-[50%] ">
             {!isAuthenticated && (
               <div className="lg:w-[70%]">
                 <SignIn className="" />
               </div>
             )}
-
-            <div className="mt-[-60px]">
+          </div>
+          {/* <div className="mt-[-60px]">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 <div className="rounded-lg overflow-hidden shadow-lg">
                   <div className="aspect-w-16 aspect-h-9">
@@ -244,8 +244,7 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
+            </div> */}
         </div>
       </div>
 
