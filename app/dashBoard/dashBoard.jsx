@@ -4,6 +4,7 @@ import { FaIdCard, FaUser } from "react-icons/fa";
 import { MdHowToVote, MdMessage, MdOutlineApproval } from "react-icons/md";
 import { AiFillLike, AiOutlineMessage } from "react-icons/ai";
 import { useUserData } from "../hooks/useUserData";
+import Link from "next/link";
 
 const DashBoard = () => {
   const { userData, loading, error, isVerifier } = useUserData();
@@ -29,62 +30,62 @@ const DashBoard = () => {
       </h1>
       <div className="grid lg:grid-cols-3">
         {/* card 1 */}
-        <a
+        <Link
           href="/myprofile"
           className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
         >
           <FaUser className="text-6xl mx-auto" />
           <h1 className="text-4xl font-bold">প্রোফাইল</h1>
-        </a>
+        </Link>
         {/* card 2 */}
-        <a
+        <Link
           href="/profileCard"
           className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
         >
           <FaIdCard className="text-6xl mx-auto" />
           <h1 className="text-4xl font-bold">আইডি কার্ড</h1>
-        </a>
+        </Link>
         {/* card 3 */}
-        <a
+        <Link
           href="/noticeBoard"
           className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
         >
           <MdMessage className="text-6xl mx-auto" />
           <h1 className="text-4xl font-bold">বিজ্ঞপ্তি দেখুন</h1>
-        </a>
+        </Link>
         {/* card 4 */}
-        <a
+        <Link
           href="/messageSend"
           className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
         >
           <AiOutlineMessage className="text-6xl mx-auto" />
           <h1 className="text-4xl font-bold">বার্তা পাঠান</h1>
-        </a>
+        </Link>
         {/* card 5 */}
-        <a
+        <Link
           href="/elections"
           className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
         >
           <AiFillLike className="text-6xl mx-auto" />
           <h1 className="text-4xl font-bold">ভোট দিন</h1>
-        </a>
+        </Link>
         {/* card 6 */}
-        <a
+        <Link
           href="/candiDate"
           className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
         >
           <MdHowToVote className="text-6xl mx-auto" />
           <h1 className="text-4xl font-bold">প্রার্থী হন</h1>
-        </a>
+        </Link>
         {/* card 7: Conditional Rendering */}
         {isVerifier && (
-          <a
+          <Link
             href="/approveList"
             className="border bg-[#DCFCE7]/50 p-4 py-8 text-center"
           >
             <MdOutlineApproval className="text-6xl mx-auto" />
             <h1 className="text-4xl font-bold">সদস্য অনুমোদন</h1>
-          </a>
+          </Link>
         )}
       </div>
     </div>

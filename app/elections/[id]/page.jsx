@@ -37,7 +37,7 @@ export default function ElectionDetail() {
         );
         setLoading(false);
       });
-  }, [id]);
+  }, [id, userToken]);
 
   const handleVote = async (postId, candidateId) => {
     try {
