@@ -100,7 +100,7 @@ const Navbar = () => {
           {isAuthenticated && isUserDataLoaded && (
             <button
               onClick={logout}
-              className="block w-full md:w-auto text-left text-green-800 hover:text-green-900 font-medium transition duration-200"
+              className="block w-full md:w-auto text-center text-white p-2 rounded-xl bg-red-500 hover:text-green-900 font-medium transition duration-200 lg:hidden "
             >
               লগআউট
             </button>
@@ -108,7 +108,7 @@ const Navbar = () => {
           {!isAuthenticated && (
             <Link
               href="/signIn"
-              className="block w-full md:w-auto text-green-800 hover:text-green-900 font-medium transition duration-200"
+              className="block w-full text-center md:w-auto  hover:text-green-900 font-medium transition duration-200 lg:hidden bg-green-800 p-2 rounded-xl text-white"
             >
               সাইন ইন
             </Link>
