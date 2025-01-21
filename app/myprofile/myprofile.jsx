@@ -30,7 +30,7 @@ const MyProfile = () => {
     if (user) {
       setProfileData({
         name: user.fullName,
-        id: user.id,
+        id: user.partyId,
         email: user.email,
         phone: user.mobile,
         nid: user.nid,

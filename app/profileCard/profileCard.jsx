@@ -28,7 +28,7 @@ const ProfileCard = () => {
     if (user) {
       setProfileData({
         name: user.fullName || "N/A", // 'full_name' from API data
-        id: user.id || "N/A", // 'userId' from API data
+        id: user.partyId || "N/A", // 'userId' from API data
         email: user.email || "N/A",
         phone: user.mobile || "N/A", // 'mobile' from API data
         nid: user.nid || "N/A",

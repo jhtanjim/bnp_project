@@ -150,6 +150,33 @@ const Navbar = () => {
             </Link>
           )}
         </div>
+
+        {/* Mobile Sign-In Button */}
+        <div className="md:hidden flex items-center space-x-4">
+          {!isAuthenticated && !menuOpen && (
+            <Link
+              href="/signIn"
+              className="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium lg:px-4 lg:py-2 rounded-md transition duration-200"
+            >
+              <span className="mr-2 hidden lg:block">সাইন ইন</span>
+              <span></span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 12h14M12 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );
