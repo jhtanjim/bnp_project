@@ -57,6 +57,26 @@ const Home = () => {
               priority
             />
           </div>
+          <div>
+            <Image
+              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+              alt="খালেদা জিয়া"
+              className="w-full lg:h-[650px] object-cover"
+              width={1200}
+              height={650}
+              priority
+            />
+          </div>
+          <div>
+            <Image
+              src="https://images.news18.com/ibnlive/uploads/2024/08/khaleda-zia-2024-08-304c0e136b37c71332f548fe2c8d89f6.png"
+              alt="খালেদা জিয়া"
+              className="w-full lg:h-[650px] object-cover"
+              width={1200}
+              height={650}
+              priority
+            />
+          </div>
         </Carousel>
       </div>
 
